@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>English Vocabulary Flashcards</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  user-select: none;
+}
+
+
+html,
+body {
+
+  width: 100%;
+  height: 100dvh;
+
+  overflow: hidden;
+
+}
+
+
+body {
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 10px;
+
+  transition:
+    background 0.4s ease;
+
+}
+
+
+/* =====================================================
+   TOP AREA
+   ===================================================== */
+
+.top-area {
+
+  width: 100%;
+
+  max-width: 440px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  flex-shrink: 0;
+
+}
+
+
+/* MODE NAVIGATION */
+
+.top-nav {
+
+  display: flex;
+
+  background:
+    rgba(255,255,255,0.25);
+
+  backdrop-filter:
+    blur(10px);
+
+  border-radius: 50px;
+
+  padding: 4px;
+
+  width: 100%;
+
+  height: 44px;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.3);
+
+}
+
+
+.mode-tab {
+
+  flex: 1;
+
+  border: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 0.82rem;
+
+  font-weight: 800;
+
+  border-radius: 50px;
+
+  cursor: pointer;
+
+}
+
+
+.mode-tab.active {
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0,0,0,0.15);
+
+}
+
+
+/* =====================================================
+   CARD COUNT
+   ===================================================== */
+
+.count-selector {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 5px;
+
+}
+
+
+.count-btn {
+
+  border: none;
+
+  background:
+    rgba(255,255,255,0.22);
+
+  color: white;
+
+  padding:
+    5px 13px;
+
+  border-radius: 30px;
+
+  font-size: 0.72rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+}
+
+
+.count-btn.active {
+
+  background: white;
+
+  color: #0f172a;
+
+}
+
+
+/* =====================================================
+   SCENE
+   ===================================================== */
+
+.scene {
+
+  width: 100%;
+
+  max-width: 440px;
+
+  height:
+    calc(100dvh - 142px);
+
+  perspective: 1200px;
+
+  flex-grow: 1;
+
+  position: relative;
+
+  touch-action: none;
+
+}
+
+
+.card {
+
+  width: 100%;
+
+  height: 100%;
+
+  position: relative;
+
+  transition:
+    transform 0.45s
+      cubic-bezier(
+        0.4,
+        0.2,
+        0.2,
+        1
+      ),
+    opacity 0.3s ease;
+
+  transform-style:
+    preserve-3d;
+
+  -webkit-transform-style:
+    preserve-3d;
+
+  cursor: grab;
+
+}
+
+
+.card:active {
+
+  cursor: grabbing;
+
+}
+
+
+.card.is-flipped {
+
+  transform:
+    rotateY(180deg);
+
+}
+
+
+.card.slide-left {
+
+  transform:
+    translateX(-120%)
+    rotate(-15deg);
+
+  opacity: 0;
+
+}
+
+
+.card.slide-up {
+
+  transform:
+    translateY(-120%);
+
+  opacity: 0;
+
+}
+
+
+.card.slide-down {
+
+  transform:
+    translateY(120%);
+
+  opacity: 0;
+
+}
+
+
+/* =====================================================
+   CARD FACES
+   ===================================================== */
+
+.card-face {
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 24px;
+
+  padding: 14px;
+
+  box-shadow:
+    0 15px 35px
+    rgba(0,0,0,0.2);
+
+  backface-visibility:
+    hidden;
+
+  -webkit-backface-visibility:
+    hidden;
+
+  background: white;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+.card-front {
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+}
+
+
+.card-back {
+
+  transform:
+    rotateY(180deg);
+
+  gap: 8px;
+
+  justify-content:
+    flex-start;
+
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+
+}
+
+
+.card-back::-webkit-scrollbar {
+
+  width: 3px;
+
+}
+
+
+.card-back::-webkit-scrollbar-thumb {
+
+  background:
+    rgba(0,0,0,0.15);
+
+}
+
+
+/* =====================================================
+   FRONT
+   ===================================================== */
+
+.front-words-wrapper {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  margin: auto 0;
+
+  flex-grow: 1;
+
+}
+
+
+.front-word-card {
+
+  width: 100%;
+
+  padding:
+    24px 14px;
+
+  border-radius: 18px;
+
+  text-align: center;
+
+  border: 3px solid transparent;
+
+  box-shadow:
+    0 6px 16px
+    rgba(0,0,0,0.04);
+
+}
+
+
+.front-word-text {
+
+  font-size:
+    clamp(
+      2rem,
+      7vw,
+      2.6rem
+    );
+
+  font-weight: 800;
+
+}
+
+
+.vs-badge {
+
+  font-size: 0.95rem;
+
+  font-weight: 800;
+
+  padding:
+    6px 18px;
+
+  border-radius: 50px;
+
+  box-shadow:
+    0 4px 10px
+    rgba(0,0,0,0.1);
+
+}
+
+
+/* =====================================================
+   BACK
+   ===================================================== */
+
+.difference-box {
+
+  border-radius: 14px;
+
+  padding:
+    10px 12px;
+
+  flex-shrink: 0;
+
+}
+
+
+.section-title {
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
+  margin-bottom: 2px;
+
+  display: block;
+
+}
+
+
+.difference-text {
+
+  font-size:
+    clamp(
+      0.9rem,
+      3.2vw,
+      1rem
+    );
+
+  font-weight: 700;
+
+  line-height: 1.3;
+
+}
+
+
+.word-details-card {
+
+  border-radius: 16px;
+
+  padding:
+    10px 12px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  border: 2px solid transparent;
+
+  flex-shrink: 0;
+
+}
+
+
+.word-header-row {
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items: center;
+
+  gap: 6px;
+
+}
+
+
+.word-name {
+
+  font-size:
+    clamp(
+      1.2rem,
+      4.5vw,
+      1.5rem
+    );
+
+  font-weight: 800;
+
+}
+
+
+.tags-group {
+
+  display: flex;
+
+  gap: 4px;
+
+  flex-wrap: wrap;
+
+  justify-content: flex-end;
+
+}
+
+
+.tag-badge {
+
+  padding:
+    3px 8px;
+
+  border-radius: 50px;
+
+  font-size: 0.65rem;
+
+  font-weight: 700;
+
+}
+
+
+.inner-label {
+
+  font-size: 0.65rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
+  margin-bottom: 1px;
+
+  display: block;
+
+}
+
+
+.meaning-block {
+
+  border-left: 3px solid;
+
+  border-radius: 6px;
+
+  padding:
+    5px 8px;
+
+}
+
+
+.meaning-content {
+
+  font-size:
+    clamp(
+      0.85rem,
+      3vw,
+      0.95rem
+    );
+
+  font-weight: 600;
+
+  line-height: 1.25;
+
+}
+
+
+.sentence-block {
+
+  border: 2px dashed;
+
+  border-radius: 8px;
+
+  padding:
+    5px 8px;
+
+  background: #ffffff;
+
+}
+
+
+.sentence-content {
+
+  font-size:
+    clamp(
+      0.8rem,
+      2.8vw,
+      0.9rem
+    );
+
+  font-weight: 500;
+
+  line-height: 1.25;
+
+  font-style: italic;
+
+}
+
+
+/* =====================================================
+   LOADING
+   ===================================================== */
+
+.loading {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  height: 100%;
+
+  color: #64748b;
+
+  font-weight: 800;
+
+  font-size: 1rem;
+
+}
+
+
+.loading-spinner {
+
+  width: 30px;
+
+  height: 30px;
+
+  border: 4px solid #e2e8f0;
+
+  border-top-color: #f43f5e;
+
+  border-radius: 50%;
+
+  animation:
+    spin 0.8s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+  to {
+
+    transform:
+      rotate(360deg);
+
+  }
+
+}
+
+
+/* =====================================================
+   EMPTY
+   ===================================================== */
+
+.empty-card {
+
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  color: #64748b;
+
+}
+
+
+.empty-card .big {
+
+  font-size: 3rem;
+
+  margin-bottom: 10px;
+
+}
+
+
+.empty-card strong {
+
+  font-size: 1.1rem;
+
+}
+
+
+/* =====================================================
+   BOTTOM
+   ===================================================== */
+
+.bottom-bar {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  width: 100%;
+
+  max-width: 440px;
+
+  height: 32px;
+
+  flex-shrink: 0;
+
+}
+
+
+.gesture-hint {
+
+  font-size: 0.67rem;
+
+  font-weight: 700;
+
+  color:
+    rgba(255,255,255,0.85);
+
+}
+
+
+.theme-btn-small {
+
+  background:
+    rgba(255,255,255,0.9);
+
+  color: #1e293b;
+
+  border: none;
+
+  padding:
+    5px 13px;
+
+  font-size: 0.75rem;
+
+  font-weight: 800;
+
+  border-radius: 50px;
+
+  cursor: pointer;
+
+}
+
+
+/* =====================================================
+   THEMES
+   ===================================================== */
+
+body.theme-sunset {
+
+  background:
+    linear-gradient(
+      135deg,
+      #f43f5e 0%,
+      #ff7e5f 100%
+    );
+
+}
+
+
+body.theme-pastel {
+
+  background:
+    linear-gradient(
+      135deg,
+      #e0e7ff 0%,
+      #f3e8ff 100%
+    );
+
+}
+
+
+/* SUNSET */
+
+.theme-sunset .vs-badge {
+
+  background: #ff7e5f;
+
+  color: white;
+
+}
+
+
+.theme-sunset .difference-box {
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff7e5f 0%,
+      #feb47b 100%
+    );
+
+  color: white;
+
+}
+
+
+.theme-sunset .word-1 {
+
+  background: #fff7ed;
+
+  border-color: #ffedd5;
+
+  color: #ea580c;
+
+}
+
+
+.theme-sunset .word-1 .meaning-block {
+
+  background: #fef3c7;
+
+  border-color: #f59e0b;
+
+}
+
+
+.theme-sunset .word-1
+.meaning-block
+.inner-label {
+
+  color: #b45309;
+
+}
+
+
+.theme-sunset .word-1
+.meaning-content {
+
+  color: #78350f;
+
+}
+
+
+.theme-sunset .word-1
+.sentence-block {
+
+  border-color: #fed7aa;
+
+}
+
+
+.theme-sunset .word-1
+.sentence-block
+.inner-label {
+
+  color: #ea580c;
+
+}
+
+
+.theme-sunset .word-1
+.sentence-content {
+
+  color: #9a3412;
+
+}
+
+
+.theme-sunset .word-2 {
+
+  background: #f0fdf4;
+
+  border-color: #bbf7d0;
+
+  color: #16a34a;
+
+}
+
+
+.theme-sunset .word-2
+.meaning-block {
+
+  background: #dcfce7;
+
+  border-color: #22c55e;
+
+}
+
+
+.theme-sunset .word-2
+.meaning-block
+.inner-label {
+
+  color: #15803d;
+
+}
+
+
+.theme-sunset .word-2
+.meaning-content {
+
+  color: #14532d;
+
+}
+
+
+.theme-sunset .word-2
+.sentence-block {
+
+  border-color: #86efac;
+
+}
+
+
+.theme-sunset .word-2
+.sentence-block
+.inner-label {
+
+  color: #16a34a;
+
+}
+
+
+.theme-sunset .word-2
+.sentence-content {
+
+  color: #166534;
+
+}
+
+
+.theme-sunset .tag-syn {
+
+  background: #d1fae5;
+
+  color: #065f46;
+
+}
+
+
+.theme-sunset .tag-ant {
+
+  background: #ffe4e6;
+
+  color: #9f1239;
+
+}
+
+
+/* PASTEL */
+
+.theme-pastel .vs-badge {
+
+  background: #c084fc;
+
+  color: white;
+
+}
+
+
+.theme-pastel .difference-box {
+
+  background:
+    linear-gradient(
+      135deg,
+      #c084fc 0%,
+      #e879f9 100%
+    );
+
+  color: white;
+
+}
+
+
+.theme-pastel .word-1 {
+
+  background: #faf5ff;
+
+  border-color: #f3e8ff;
+
+  color: #9333ea;
+
+}
+
+
+.theme-pastel .word-1
+.meaning-block {
+
+  background: #fce7f3;
+
+  border-color: #ec4899;
+
+}
+
+
+.theme-pastel .word-1
+.meaning-block
+.inner-label {
+
+  color: #be185d;
+
+}
+
+
+.theme-pastel .word-1
+.meaning-content {
+
+  color: #831843;
+
+}
+
+
+.theme-pastel .word-1
+.sentence-block {
+
+  border-color: #fbcfe8;
+
+}
+
+
+.theme-pastel .word-1
+.sentence-block
+.inner-label {
+
+  color: #9333ea;
+
+}
+
+
+.theme-pastel .word-1
+.sentence-content {
+
+  color: #701a75;
+
+}
+
+
+.theme-pastel .word-2 {
+
+  background: #f0f9ff;
+
+  border-color: #bae6fd;
+
+  color: #0284c7;
+
+}
+
+
+.theme-pastel .word-2
+.meaning-block {
+
+  background: #e0f2fe;
+
+  border-color: #38bdf8;
+
+}
+
+
+.theme-pastel .word-2
+.meaning-block
+.inner-label {
+
+  color: #0369a1;
+
+}
+
+
+.theme-pastel .word-2
+.meaning-content {
+
+  color: #075985;
+
+}
+
+
+.theme-pastel .word-2
+.sentence-block {
+
+  border-color: #7dd3fc;
+
+}
+
+
+.theme-pastel .word-2
+.sentence-block
+.inner-label {
+
+  color: #0284c7;
+
+}
+
+
+.theme-pastel .word-2
+.sentence-content {
+
+  color: #0c4a6e;
+
+}
+
+
+.theme-pastel .tag-syn {
+
+  background: #e0e7ff;
+
+  color: #3730a3;
+
+}
+
+
+.theme-pastel .tag-ant {
+
+  background: #ffe4e6;
+
+  color: #9f1239;
+
+}
+
+
+/* =====================================================
+   CONFIRMATION MODAL
+   ===================================================== */
+
+.modal-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(15,23,42,0.55);
+
+  backdrop-filter:
+    blur(5px);
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 1000;
+
+  padding: 20px;
+
+}
+
+
+.modal-overlay.show {
+
+  display: flex;
+
+}
+
+
+.modal {
+
+  width: 100%;
+
+  max-width: 360px;
+
+  background: white;
+
+  border-radius: 22px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0,0,0,0.3);
+
+  text-align: center;
+
+}
+
+
+.modal h2 {
+
+  font-size: 1.1rem;
+
+  margin-bottom: 8px;
+
+  color: #0f172a;
+
+}
+
+
+.modal p {
+
+  font-size: 0.82rem;
+
+  color: #64748b;
+
+  margin-bottom: 18px;
+
+}
+
+
+.modal-buttons {
+
+  display: flex;
+
+  gap: 8px;
+
+}
+
+
+.modal-btn {
+
+  flex: 1;
+
+  border: none;
+
+  padding: 11px 8px;
+
+  border-radius: 12px;
+
+  font-weight: 800;
+
+  font-size: 0.75rem;
+
+  cursor: pointer;
+
+}
+
+
+.modal-learning {
+
+  background: #fef3c7;
+
+  color: #92400e;
+
+}
+
+
+.modal-completed {
+
+  background: #dcfce7;
+
+  color: #166534;
+
+}
+
+
+.modal-cancel {
+
+  background: #f1f5f9;
+
+  color: #475569;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (
+  max-height: 650px
+) {
+
+  .top-nav {
+
+    height: 38px;
+
+  }
+
+  .count-btn {
+
+    padding:
+      4px 10px;
+
+  }
+
+  .card-face {
+
+    padding: 10px;
+
+  }
+
+  .front-word-card {
+
+    padding:
+      17px 10px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body class="theme-sunset">
+
+
+<!-- =====================================================
+     TOP
+     ===================================================== -->
+
+<div class="top-area">
+
+  <div class="top-nav">
+
+    <button
+      class="mode-tab active"
+      id="tab-learning"
+      onclick="switchMode('learning')"
+    >
+      Learning
+    </button>
+
+    <button
+      class="mode-tab"
+      id="tab-revision"
+      onclick="switchMode('revision')"
+    >
+      Revision
+      (<span id="rev-count">0</span>)
+    </button>
+
+  </div>
+
+
+  <div
+    class="count-selector"
+    id="count-selector"
+  >
+
+    <!-- Buttons generated by JS -->
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     FLASHCARD
+     ===================================================== -->
+
+<div class="scene">
+
+  <div
+    class="card"
+    id="flashcard"
+  >
+
+    <!-- FRONT -->
+
+    <div class="card-face card-front">
+
+      <div
+        class="front-words-wrapper"
+      >
+
+        <div
+          class="front-word-card word-1"
+        >
+
+          <span
+            class="front-word-text"
+            id="front-w1"
+          >
+            Loading...
+          </span>
+
+        </div>
+
+
+        <div class="vs-badge">
+          VS
+        </div>
+
+
+        <div
+          class="front-word-card word-2"
+        >
+
+          <span
+            class="front-word-text"
+            id="front-w2"
+          >
+            Loading...
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- BACK -->
+
+    <div
+      class="card-face card-back"
+    >
+
+      <div
+        class="difference-box"
+      >
+
+        <span class="section-title">
+          ⚡ Key Difference
+        </span>
+
+        <p
+          class="difference-text"
+          id="back-diff"
+        >
+        </p>
+
+      </div>
+
+
+      <!-- WORD 1 -->
+
+      <div
+        class="word-details-card word-1"
+      >
+
+        <div
+          class="word-header-row"
+        >
+
+          <span
+            class="word-name"
+            id="back-w1-name"
+          >
+          </span>
+
+          <div class="tags-group">
+
+            <span
+              class="tag-badge tag-syn"
+              id="back-w1-syn"
+            >
+            </span>
+
+            <span
+              class="tag-badge tag-ant"
+              id="back-w1-ant"
+            >
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="meaning-block">
+
+          <span class="inner-label">
+            اردو معنی
+          </span>
+
+          <p
+            class="meaning-content"
+            id="back-w1-mean"
+          >
+          </p>
+
+        </div>
+
+
+        <div class="sentence-block">
+
+          <span class="inner-label">
+            Sentence Example
+          </span>
+
+          <p
+            class="sentence-content"
+            id="back-w1-sent"
+          >
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- WORD 2 -->
+
+      <div
+        class="word-details-card word-2"
+      >
+
+        <div
+          class="word-header-row"
+        >
+
+          <span
+            class="word-name"
+            id="back-w2-name"
+          >
+          </span>
+
+          <div class="tags-group">
+
+            <span
+              class="tag-badge tag-syn"
+              id="back-w2-syn"
+            >
+            </span>
+
+            <span
+              class="tag-badge tag-ant"
+              id="back-w2-ant"
+            >
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="meaning-block">
+
+          <span class="inner-label">
+            اردو معنی
+          </span>
+
+          <p
+            class="meaning-content"
+            id="back-w2-mean"
+          >
+          </p>
+
+        </div>
+
+
+        <div class="sentence-block">
+
+          <span class="inner-label">
+            Sentence Example
+          </span>
+
+          <p
+            class="sentence-content"
+            id="back-w2-sent"
+          >
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     BOTTOM
+     ===================================================== -->
+
+<div class="bottom-bar">
+
+  <span class="gesture-hint">
+    ➡️ Flip &nbsp;|&nbsp;
+    ⬅️ Move &nbsp;|&nbsp;
+    ⬆️ Next &nbsp;|&nbsp;
+    ⬇️ Previous
+  </span>
+
+
+  <button
+    class="theme-btn-small"
+    onclick="toggleTheme()"
+  >
+    🎨 Theme
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL
+     ===================================================== -->
+
+<div
+  class="modal-overlay"
+  id="move-modal"
+>
+
+  <div class="modal">
+
+    <h2>
+      What would you like to do?
+    </h2>
+
+    <p>
+      Choose where this revision card should go.
+    </p>
+
+
+    <div class="modal-buttons">
+
+      <button
+        class="modal-btn modal-learning"
+        onclick="confirmMove('learning')"
+      >
+        ↩️ Learning
+      </button>
+
+
+      <button
+        class="modal-btn modal-completed"
+        onclick="confirmMove('learned2')"
+      >
+        ✅ Learned 2
+      </button>
+
+
+      <button
+        class="modal-btn modal-cancel"
+        onclick="closeMoveModal()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURATION
+   ===================================================== */
+
+/*
+ * IMPORTANT:
+ *
+ * Replace this URL with your Apps Script
+ * DEPLOYED WEB APP URL.
+ *
+ * It MUST end with:
+ *
+ * /exec
+ *
+ */
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwrd05bPS6U1pPJ8H6jqp-XxgsS6QbHbU9V2PdXOrdsE_TPsuntlQbCxMYfyTnfi-k6/exec";
+
+
+/* =====================================================
+   STATE
+   ===================================================== */
+
+let learningDeck = [];
+
+let revisionDeck = [];
+
+let activeDeck = [];
+
+let currentIndex = 0;
+
+let currentMode = "learning";
+
+let currentCount = 10;
+
+let pendingMoveCard = null;
+
+let loading = false;
+
+
+/* =====================================================
+   COUNT OPTIONS
+   ===================================================== */
+
+function renderCountButtons() {
+
+  const container =
+    document.getElementById(
+      "count-selector"
+    );
+
+
+  const counts =
+    currentMode === "learning"
+      ? [10, 20, 30]
+      : [20, 40, 50];
+
+
+  container.innerHTML = "";
+
+
+  counts.forEach(
+    count => {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "count-btn";
+
+
+      if (
+        count === currentCount
+      ) {
+
+        button.classList.add(
+          "active"
+        );
+
+      }
+
+
+      button.textContent =
+        count + " Cards";
+
+
+      button.onclick =
+        () => {
+
+          currentCount =
+            count;
+
+          renderCountButtons();
+
+          loadCards();
+
+        };
+
+
+      container.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   API CALL
+   ===================================================== */
+
+async function apiGet(
+  params
+) {
+
+  if (
+    !API_URL ||
+    API_URL.includes(
+      "PASTE_YOUR"
+    )
+  ) {
+
+    throw new Error(
+      "Apps Script API URL has not been configured."
+    );
+
+  }
+
+
+  const query =
+    new URLSearchParams(
+      params
+    ).toString();
+
+
+  const url =
+    API_URL +
+    "?"+
+    query;
+
+
+  console.log(
+    "API:",
+    url
+  );
+
+
+  const response =
+    await fetch(
+      url,
+      {
+        method: "GET",
+        redirect: "follow",
+        cache: "no-store"
+      }
+    );
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "HTTP " +
+      response.status
+    );
+
+  }
+
+
+  const text =
+    await response.text();
+
+
+  console.log(
+    "API response:",
+    text.substring(
+      0,
+      500
+    )
+  );
+
+
+  let data;
+
+
+  try {
+
+    data =
+      JSON.parse(text);
+
+  }
+
+  catch (error) {
+
+    throw new Error(
+      "Apps Script did not return JSON."
+    );
+
+  }
+
+
+  if (
+    !data.success
+  ) {
+
+    throw new Error(
+      data.error ||
+      "Apps Script error."
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =====================================================
+   LOAD CARDS
+   ===================================================== */
+
+async function loadCards() {
+
+  if (loading) {
+
+    return;
+
+  }
+
+
+  loading = true;
+
+
+  showLoading();
+
+
+  try {
+
+    const data =
+      await apiGet({
+
+        action: "cards",
+
+        mode:
+          currentMode,
+
+        limit:
+          currentCount,
+
+        _: Date.now()
+
+      });
+
+
+    console.log(
+      "Cards returned:",
+      data.cards.length
+    );
+
+
+    if (
+      currentMode ===
+      "learning"
+    ) {
+
+      learningDeck =
+        data.cards;
+
+      activeDeck =
+        learningDeck;
+
+    } else {
+
+      revisionDeck =
+        data.cards;
+
+      activeDeck =
+        revisionDeck;
+
+    }
+
+
+    currentIndex = 0;
+
+
+    updateRevisionCount();
+
+
+    renderCard();
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    showError(
+      error.message
+    );
+
+  }
+
+
+  finally {
+
+    loading = false;
+
+  }
+
+}
+
+
+/* =====================================================
+   LOADING DISPLAY
+   ===================================================== */
+
+function showLoading() {
+
+  document.getElementById(
+    "front-w1"
+  ).textContent =
+    "Loading...";
+
+
+  document.getElementById(
+    "front-w2"
+  ).textContent =
+    "Please wait";
+
+}
+
+
+/* =====================================================
+   ERROR DISPLAY
+   ===================================================== */
+
+function showError(
+  message
+) {
+
+  document.getElementById(
+    "front-w1"
+  ).textContent =
+    "Connection Error";
+
+
+  document.getElementById(
+    "front-w2"
+  ).textContent =
+    "Check Apps Script";
+
+
+  console.error(
+    "Flashcard error:",
+    message
+  );
+
+}
+
+
+/* =====================================================
+   RENDER CARD
+   ===================================================== */
+
+function renderCard() {
+
+  const card =
+    document.getElementById(
+      "flashcard"
+    );
+
+
+  card.classList.remove(
+    "is-flipped",
+    "slide-left",
+    "slide-up",
+    "slide-down"
+  );
+
+
+  if (
+    !activeDeck ||
+    activeDeck.length === 0
+  ) {
+
+    document.getElementById(
+      "front-w1"
+    ).textContent =
+      "No Cards";
+
+
+    document.getElementById(
+      "front-w2"
+    ).textContent =
+      currentMode === "learning"
+        ? "Learning Empty"
+        : "Revision Empty";
+
+
+    document.getElementById(
+      "back-diff"
+    ).textContent =
+      "There are no cards available.";
+
+
+    return;
+
+  }
+
+
+  if (
+    currentIndex >=
+    activeDeck.length
+  ) {
+
+    currentIndex = 0;
+
+  }
+
+
+  const item =
+    activeDeck[
+      currentIndex
+    ];
+
+
+  /* FRONT */
+
+  document.getElementById(
+    "front-w1"
+  ).textContent =
+    item.w1.name;
+
+
+  document.getElementById(
+    "front-w2"
+  ).textContent =
+    item.w2.name;
+
+
+  /* DIFFERENCE */
+
+  document.getElementById(
+    "back-diff"
+  ).textContent =
+    item.diff ||
+    "No difference information available.";
+
+
+  /* WORD 1 */
+
+  document.getElementById(
+    "back-w1-name"
+  ).textContent =
+    item.w1.name;
+
+
+  document.getElementById(
+    "back-w1-syn"
+  ).textContent =
+    "Syn: " +
+    (item.w1.syn || "—");
+
+
+  document.getElementById(
+    "back-w1-ant"
+  ).textContent =
+    "Ant: " +
+    (item.w1.ant || "—");
+
+
+  document.getElementById(
+    "back-w1-mean"
+  ).textContent =
+    item.w1.mean ||
+    "—";
+
+
+  document.getElementById(
+    "back-w1-sent"
+  ).textContent =
+    item.w1.sent ||
+    "—";
+
+
+  /* WORD 2 */
+
+  document.getElementById(
+    "back-w2-name"
+  ).textContent =
+    item.w2.name;
+
+
+  document.getElementById(
+    "back-w2-syn"
+  ).textContent =
+    "Syn: " +
+    (item.w2.syn || "—");
+
+
+  document.getElementById(
+    "back-w2-ant"
+  ).textContent =
+    "Ant: " +
+    (item.w2.ant || "—");
+
+
+  document.getElementById(
+    "back-w2-mean"
+  ).textContent =
+    item.w2.mean ||
+    "—";
+
+
+  document.getElementById(
+    "back-w2-sent"
+  ).textContent =
+    item.w2.sent ||
+    "—";
+
+}
+
+
+/* =====================================================
+   MODE SWITCH
+   ===================================================== */
+
+function switchMode(
+  mode
+) {
+
+  if (
+    currentMode === mode
+  ) {
+
+    return;
+
+  }
+
+
+  currentMode =
+    mode;
+
+
+  currentIndex =
+    0;
+
+
+  if (
+    mode === "learning"
+  ) {
+
+    document.getElementById(
+      "tab-learning"
+    ).classList.add(
+      "active"
+    );
+
+
+    document.getElementById(
+      "tab-revision"
+    ).classList.remove(
+      "active"
+    );
+
+
+    currentCount = 10;
+
+  }
+
+  else {
+
+    document.getElementById(
+      "tab-learning"
+    ).classList.remove(
+      "active"
+    );
+
+
+    document.getElementById(
+      "tab-revision"
+    ).classList.add(
+      "active"
+    );
+
+
+    currentCount = 20;
+
+  }
+
+
+  renderCountButtons();
+
+
+  /*
+   * Always reload from Google Sheet.
+   */
+
+  loadCards();
+
+}
+
+
+/* =====================================================
+   REVISION COUNT
+   ===================================================== */
+
+function updateRevisionCount() {
+
+  document.getElementById(
+    "rev-count"
+  ).textContent =
+    revisionDeck.length;
+
+}
+
+
+/* =====================================================
+   NEXT CARD
+   ===================================================== */
+
+function nextCard() {
+
+  if (
+    activeDeck.length === 0
+  ) {
+
+    return;
+
+  }
+
+
+  const card =
+    document.getElementById(
+      "flashcard"
+    );
+
+
+  card.classList.add(
+    "slide-up"
+  );
+
+
+  setTimeout(
+    () => {
+
+      currentIndex =
+        (
+          currentIndex + 1
+        ) %
+        activeDeck.length;
+
+
+      renderCard();
+
+    },
+    300
+  );
+
+}
+
+
+/* =====================================================
+   PREVIOUS CARD
+   ===================================================== */
+
+function previousCard() {
+
+  if (
+    activeDeck.length === 0
+  ) {
+
+    return;
+
+  }
+
+
+  const card =
+    document.getElementById(
+      "flashcard"
+    );
+
+
+  card.classList.add(
+    "slide-down"
+  );
+
+
+  setTimeout(
+    () => {
+
+      currentIndex =
+        (
+          currentIndex -
+          1 +
+          activeDeck.length
+        ) %
+        activeDeck.length;
+
+
+      renderCard();
+
+    },
+    300
+  );
+
+}
+
+
+/* =====================================================
+   FLIP
+   ===================================================== */
+
+function flipCard() {
+
+  document.getElementById(
+    "flashcard"
+  ).classList.toggle(
+    "is-flipped"
+  );
+
+}
+
+
+/* =====================================================
+   LEFT SWIPE
+   ===================================================== */
+
+function handleLeftSwipe() {
+
+  if (
+    activeDeck.length === 0
+  ) {
+
+    return;
+
+  }
+
+
+  const item =
+    activeDeck[
+      currentIndex
+    ];
+
+
+  if (
+    !item
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+   * LEARNING MODE:
+   *
+   * Vocabulary -> Learned
+   */
+
+  if (
+    currentMode ===
+    "learning"
+  ) {
+
+    moveCardToRevision(
+      item
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * REVISION MODE:
+   *
+   * Ask user:
+   *
+   * Learning
+   * OR
+   * Learned 2
+   */
+
+  pendingMoveCard =
+    item;
+
+
+  document.getElementById(
+    "move-modal"
+  ).classList.add(
+    "show"
+  );
+
+}
+
+
+/* =====================================================
+   MOVE LEARNING CARD
+   ===================================================== */
+
+async function moveCardToRevision(
+  item
+) {
+
+  const card =
+    document.getElementById(
+      "flashcard"
+    );
+
+
+  card.classList.add(
+    "slide-left"
+  );
+
+
+  try {
+
+    const result =
+      await apiGet({
+
+        action: "move",
+
+        id:
+          item.id,
+
+        destination:
+          "revision",
+
+        _: Date.now()
+
+      });
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
+    }
+
+
+    setTimeout(
+      () => {
+
+        activeDeck.splice(
+          currentIndex,
+          1
+        );
+
+
+        if (
+          currentIndex >=
+          activeDeck.length
+        ) {
+
+          currentIndex = 0;
+
+        }
+
+
+        renderCard();
+
+      },
+      300
+    );
+
+
+  }
+
+  catch (error) {
+
+    card.classList.remove(
+      "slide-left"
+    );
+
+
+    alert(
+      "Could not move card:\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   CONFIRM REVISION MOVE
+   ===================================================== */
+
+async function confirmMove(
+  destination
+) {
+
+  if (
+    !pendingMoveCard
+  ) {
+
+    return;
+
+  }
+
+
+  const item =
+    pendingMoveCard;
+
+
+  closeMoveModal();
+
+
+  const card =
+    document.getElementById(
+      "flashcard"
+    );
+
+
+  card.classList.add(
+    "slide-left"
+  );
+
+
+  try {
+
+    const result =
+      await apiGet({
+
+        action: "move",
+
+        id:
+          item.id,
+
+        destination:
+          destination,
+
+        _: Date.now()
+
+      });
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
+    }
+
+
+    setTimeout(
+      () => {
+
+        activeDeck.splice(
+          currentIndex,
+          1
+        );
+
+
+        revisionDeck =
+          activeDeck;
+
+
+        updateRevisionCount();
+
+
+        if (
+          currentIndex >=
+          activeDeck.length
+        ) {
+
+          currentIndex = 0;
+
+        }
+
+
+        renderCard();
+
+      },
+      300
+    );
+
+
+  }
+
+  catch (error) {
+
+    card.classList.remove(
+      "slide-left"
+    );
+
+
+    alert(
+      "Could not move card:\n\n" +
+      error.message
+    );
+
+  }
+
+
+  pendingMoveCard =
+    null;
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+   ===================================================== */
+
+function closeMoveModal() {
+
+  document.getElementById(
+    "move-modal"
+  ).classList.remove(
+    "show"
+  );
+
+
+  pendingMoveCard =
+    null;
+
+}
+
+
+/* =====================================================
+   SWIPE ENGINE
+   ===================================================== */
+
+let startX = 0;
+
+let startY = 0;
+
+let startTime = 0;
+
+
+const cardElement =
+  document.getElementById(
+    "flashcard"
+  );
+
+
+function handleStart(
+  e
+) {
+
+  const point =
+    e.touches
+      ? e.touches[0]
+      : e;
+
+
+  startX =
+    point.clientX;
+
+
+  startY =
+    point.clientY;
+
+
+  startTime =
+    Date.now();
+
+}
+
+
+function handleEnd(
+  e
+) {
+
+  const point =
+    e.changedTouches
+      ? e.changedTouches[0]
+      : e;
+
+
+  const diffX =
+    point.clientX -
+    startX;
+
+
+  const diffY =
+    point.clientY -
+    startY;
+
+
+  const minSwipe =
+    45;
+
+
+  const elapsed =
+    Date.now() -
+    startTime;
+
+
+  /*
+   * Ignore very small movements.
+   */
+
+  if (
+    Math.abs(diffX) <
+      minSwipe &&
+    Math.abs(diffY) <
+      minSwipe
+  ) {
+
+    /*
+     * A normal click does nothing.
+     */
+
+    return;
+
+  }
+
+
+  /*
+   * Horizontal
+   */
+
+  if (
+    Math.abs(diffX) >
+    Math.abs(diffY)
+  ) {
+
+    if (
+      diffX >
+      minSwipe
+    ) {
+
+      /*
+       * RIGHT = FLIP
+       */
+
+      flipCard();
+
+    }
+
+
+    else if (
+      diffX <
+      -minSwipe
+    ) {
+
+      /*
+       * LEFT = MOVE
+       */
+
+      handleLeftSwipe();
+
+    }
+
+  }
+
+
+  /*
+   * Vertical
+   */
+
+  else {
+
+    if (
+      diffY <
+      -minSwipe
+    ) {
+
+      /*
+       * UP = NEXT
+       */
+
+      nextCard();
+
+    }
+
+
+    else if (
+      diffY >
+      minSwipe
+    ) {
+
+      /*
+       * DOWN = PREVIOUS
+       */
+
+      previousCard();
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   TOUCH EVENTS
+   ===================================================== */
+
+cardElement.addEventListener(
+  "touchstart",
+  handleStart,
+  {
+    passive: true
+  }
+);
+
+
+cardElement.addEventListener(
+  "touchend",
+  handleEnd,
+  {
+    passive: true
+  }
+);
+
+
+/* =====================================================
+   MOUSE EVENTS
+   ===================================================== */
+
+cardElement.addEventListener(
+  "mousedown",
+  handleStart
+);
+
+
+cardElement.addEventListener(
+  "mouseup",
+  handleEnd
+);
+
+
+/* =====================================================
+   THEME
+   ===================================================== */
+
+function toggleTheme() {
+
+  const body =
+    document.body;
+
+
+  if (
+    body.classList.contains(
+      "theme-sunset"
+    )
+  ) {
+
+    body.classList.remove(
+      "theme-sunset"
+    );
+
+    body.classList.add(
+      "theme-pastel"
+    );
+
+  }
+
+  else {
+
+    body.classList.remove(
+      "theme-pastel"
+    );
+
+    body.classList.add(
+      "theme-sunset"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   INITIALIZATION
+   ===================================================== */
+
+renderCountButtons();
+
+loadCards();
+
+</script>
+
+</body>
+
+</html>
