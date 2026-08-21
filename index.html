@@ -1,910 +1,2808 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Confusing Words Master - FPSC / CSS Prep</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap');
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      user-select: none;
-      -webkit-user-select: none;
-    }
+<meta charset="UTF-8">
 
-    html, body {
-      width: 100%;
-      height: 100dvh;
-      overflow: hidden;
-    }
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      transition: background 0.4s ease;
-    }
+<title>English Vocabulary Flashcards</title>
 
-    .app-header {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      width: 100%;
-      max-width: 460px;
-      flex-shrink: 0;
-    }
+<style>
 
-    .level-selector {
-      display: flex;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 4px;
-      border-radius: 50px;
-      backdrop-filter: blur(8px);
-    }
+/* =========================================================
+   FONT
+========================================================= */
 
-    .level-btn {
-      flex: 1;
-      border: none;
-      background: transparent;
-      color: #ffffff;
-      font-size: 0.75rem;
-      font-weight: 800;
-      padding: 6px 0;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
-    .level-btn.active {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
 
-    .mode-nav {
-      display: flex;
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 50px;
-      padding: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
+/* =========================================================
+   GLOBAL
+========================================================= */
 
-    .mode-tab {
-      flex: 1;
-      border: none;
-      background: transparent;
-      color: #ffffff;
-      font-size: 0.82rem;
-      font-weight: 800;
-      padding: 8px 0;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+}
 
-    .mode-tab.active {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 
-    .scene {
-      width: 100%;
-      max-width: 460px;
-      height: calc(100dvh - 145px);
-      perspective: 1200px;
-      flex-grow: 1;
-      position: relative;
-      touch-action: none;
-      margin: 6px 0;
-    }
+body {
+  min-height: 100dvh;
 
-    .card {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.3s ease;
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
-      cursor: grab;
-    }
+  background:
+    linear-gradient(
+      135deg,
+      #667eea 0%,
+      #764ba2 100%
+    );
 
-    .card:active { cursor: grabbing; }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .card.is-flipped { transform: rotateY(180deg); }
-    .card.slide-left { transform: translateX(-120%) rotate(-15deg); opacity: 0; }
-    .card.slide-up { transform: translateY(-120%); opacity: 0; }
-    .card.slide-down { transform: translateY(120%); opacity: 0; }
+  padding: 6px;
 
-    .card-face {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border-radius: 24px;
-      padding: 16px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-    }
+  color: #1e293b;
 
-    .card-front {
-      justify-content: space-between;
-      align-items: center;
-    }
+  transition:
+    background 0.3s ease;
+}
 
-    .card-back {
-      transform: rotateY(180deg);
-      gap: 8px;
-      justify-content: flex-start;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-    }
 
-    .card-back::-webkit-scrollbar { width: 3px; }
-    .card-back::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
+/* =========================================================
+   THEMES
+========================================================= */
 
-    .front-words-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      width: 100%;
-      margin: auto 0;
-      flex-grow: 1;
-    }
+body.theme-blue {
+  background:
+    linear-gradient(
+      135deg,
+      #667eea 0%,
+      #764ba2 100%
+    );
+}
 
-    .front-word-card {
-      width: 100%;
-      padding: 24px 14px;
-      border-radius: 18px;
-      text-align: center;
-      border: 3px solid transparent;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
-    }
+body.theme-ocean {
+  background:
+    linear-gradient(
+      135deg,
+      #0891b2 0%,
+      #2563eb 100%
+    );
+}
 
-    .front-word-text {
-      font-size: clamp(2rem, 7vw, 2.6rem);
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
+body.theme-sunset {
+  background:
+    linear-gradient(
+      135deg,
+      #f97316 0%,
+      #db2777 100%
+    );
+}
 
-    .vs-badge {
-      font-size: 0.95rem;
-      font-weight: 800;
-      padding: 6px 18px;
-      border-radius: 50px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+body.theme-green {
+  background:
+    linear-gradient(
+      135deg,
+      #10b981 0%,
+      #047857 100%
+    );
+}
 
-    .difference-box {
-      border-radius: 14px;
-      padding: 10px 12px;
-      flex-shrink: 0;
-    }
+body.theme-dark {
+  background:
+    linear-gradient(
+      135deg,
+      #111827 0%,
+      #312e81 100%
+    );
+}
 
-    .difference-box .section-title {
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
-      display: block;
-    }
 
-    .difference-text {
-      font-size: clamp(0.9rem, 3.2vw, 1rem);
-      font-weight: 700;
-      line-height: 1.3;
-    }
+/* =========================================================
+   APP
+========================================================= */
 
-    .word-details-card {
-      border-radius: 16px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      border: 2px solid transparent;
-      flex-shrink: 0;
-    }
+.app {
+  width: min(94vw, 430px);
 
-    .word-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-    }
+  height: min(97dvh, 760px);
 
-    .word-name {
-      font-size: clamp(1.2rem, 4.5vw, 1.5rem);
-      font-weight: 800;
-    }
+  display: flex;
+  flex-direction: column;
 
-    .tags-group { display: flex; gap: 4px; }
+  gap: 5px;
 
-    .tag-badge {
-      padding: 3px 8px;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 700;
-    }
+  position: relative;
+}
 
-    .inner-label {
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1px;
-      display: block;
-    }
 
-    .meaning-block {
-      border-left: 3px solid;
-      border-radius: 6px;
-      padding: 5px 8px;
-    }
+/* =========================================================
+   TOP BAR
+========================================================= */
 
-    .meaning-content {
-      font-size: clamp(0.85rem, 3vw, 0.95rem);
-      font-weight: 600;
-      line-height: 1.25;
-    }
+.top-bar {
+  width: 100%;
 
-    .sentence-block {
-      border: 2px dashed;
-      border-radius: 8px;
-      padding: 5px 8px;
-      background: #ffffff;
-    }
+  min-height: 30px;
 
-    .sentence-content {
-      font-size: clamp(0.8rem, 2.8vw, 0.9rem);
-      font-weight: 500;
-      line-height: 1.25;
-      font-style: italic;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    .bottom-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 460px;
-      height: 32px;
-      flex-shrink: 0;
-    }
+  flex-shrink: 0;
+}
 
-    .gesture-hint {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.85);
-    }
+.app-title {
+  color: white;
 
-    .footer-btns { display: flex; gap: 6px; }
+  font-size: 14px;
 
-    .theme-btn-small {
-      background: rgba(255, 255, 255, 0.9);
-      color: #1e293b;
-      border: none;
-      padding: 5px 12px;
-      font-size: 0.75rem;
-      font-weight: 800;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
+  font-weight: 800;
 
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(5px);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-    }
+  letter-spacing: .3px;
+}
 
-    .modal-content {
-      background: #ffffff;
-      width: 100%;
-      max-width: 440px;
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
 
-    .modal-content h3 { font-size: 1.2rem; color: #0f172a; }
+.theme-toggle {
+  width: 32px;
+  height: 32px;
 
-    .form-group { display: flex; flex-direction: column; gap: 4px; }
+  border: none;
+  border-radius: 50%;
 
-    .form-group label {
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: #475569;
-      text-transform: uppercase;
-    }
+  background:
+    rgba(255,255,255,.20);
 
-    .form-group input, .form-group select, .form-group textarea {
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: 1px solid #cbd5e1;
-      font-size: 0.9rem;
-      outline: none;
-    }
+  color: white;
 
-    .modal-actions { display: flex; gap: 8px; margin-top: 10px; }
+  font-size: 16px;
 
-    .modal-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      font-weight: 800;
-      cursor: pointer;
-    }
+  cursor: pointer;
 
-    .btn-save { background: #10b981; color: #ffffff; }
-    .btn-cancel { background: #e2e8f0; color: #475569; }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    body.theme-sunset { background: linear-gradient(135deg, #f43f5e 0%, #ff7e5f 100%); }
-    .theme-sunset .vs-badge { background: #ff7e5f; color: #ffffff; }
-    .theme-sunset .difference-box { background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); color: #ffffff; }
-    .theme-sunset .word-1 { background: #fff7ed; border-color: #ffedd5; color: #ea580c; }
-    .theme-sunset .word-1 .meaning-block { background: #fef3c7; border-color: #f59e0b; }
-    .theme-sunset .word-1 .meaning-block .inner-label { color: #b45309; }
-    .theme-sunset .word-1 .meaning-content { color: #78350f; }
-    .theme-sunset .word-1 .sentence-block { border-color: #fed7aa; }
-    .theme-sunset .word-1 .sentence-block .inner-label { color: #ea580c; }
-    .theme-sunset .word-1 .sentence-content { color: #9a3412; }
-    .theme-sunset .word-2 { background: #f0fdf4; border-color: #bbf7d0; color: #16a34a; }
-    .theme-sunset .word-2 .meaning-block { background: #dcfce7; border-color: #22c55e; }
-    .theme-sunset .word-2 .meaning-block .inner-label { color: #15803d; }
-    .theme-sunset .word-2 .meaning-content { color: #14532d; }
-    .theme-sunset .word-2 .sentence-block { border-color: #86efac; }
-    .theme-sunset .word-2 .sentence-block .inner-label { color: #16a34a; }
-    .theme-sunset .word-2 .sentence-content { color: #166534; }
-    .theme-sunset .tag-syn { background: #d1fae5; color: #065f46; }
-    .theme-sunset .tag-ant { background: #ffe4e6; color: #9f1239; }
+  backdrop-filter: blur(8px);
 
-    body.theme-pastel { background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%); }
-    .theme-pastel .vs-badge { background: #c084fc; color: #ffffff; }
-    .theme-pastel .difference-box { background: linear-gradient(135deg, #c084fc 0%, #e879f9 100%); color: #ffffff; }
-    .theme-pastel .word-1 { background: #faf5ff; border-color: #f3e8ff; color: #9333ea; }
-    .theme-pastel .word-1 .meaning-block { background: #fce7f3; border-color: #ec4899; }
-    .theme-pastel .word-1 .meaning-block .inner-label { color: #be185d; }
-    .theme-pastel .word-1 .meaning-content { color: #831843; }
-    .theme-pastel .word-1 .sentence-block { border-color: #fbcfe8; }
-    .theme-pastel .word-1 .sentence-block .inner-label { color: #9333ea; }
-    .theme-pastel .word-1 .sentence-content { color: #701a75; }
-    .theme-pastel .word-2 { background: #f0f9ff; border-color: #bae6fd; color: #0284c7; }
-    .theme-pastel .word-2 .meaning-block { background: #e0f2fe; border-color: #38bdf8; }
-    .theme-pastel .word-2 .meaning-block .inner-label { color: #0369a1; }
-    .theme-pastel .word-2 .meaning-content { color: #075985; }
-    .theme-pastel .word-2 .sentence-block { border-color: #7dd3fc; }
-    .theme-pastel .word-2 .sentence-block .inner-label { color: #0284c7; }
-    .theme-pastel .word-2 .sentence-content { color: #0c4a6e; }
-    .theme-pastel .tag-syn { background: #e0e7ff; color: #3730a3; }
-    .theme-pastel .tag-ant { background: #ffe4e6; color: #9f1239; }
-  </style>
+  box-shadow:
+    0 4px 10px
+    rgba(0,0,0,.12);
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  flex-shrink: 0;
+}
+
+.controls button,
+.controls select {
+  border: none;
+  border-radius: 9px;
+
+  padding: 6px 9px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.controls button {
+  background: white;
+  color: #4c1d95;
+
+  box-shadow:
+    0 3px 8px
+    rgba(0,0,0,.10);
+}
+
+.controls button.secondary {
+  background:
+    rgba(255,255,255,.25);
+
+  color: white;
+
+  border:
+    1px solid
+    rgba(255,255,255,.20);
+}
+
+.controls select {
+  background: white;
+  color: #334155;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+  text-align: center;
+
+  color:
+    rgba(255,255,255,.88);
+
+  font-size: 9px;
+
+  height: 12px;
+  line-height: 12px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   CARD CONTAINER
+========================================================= */
+
+#cardContainer {
+  width: 100%;
+
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.card {
+  width: 100%;
+  height: 100%;
+
+  background: #ffffff;
+
+  border-radius: 24px;
+
+  padding: 10px;
+
+  box-shadow:
+    0 20px 45px
+    rgba(0,0,0,.22);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  position: relative;
+
+  animation:
+    cardAppear .25s ease;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: scale(.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* =========================================================
+   CARD NUMBER
+   Tiny / no extra space
+========================================================= */
+
+.card-number {
+  position: absolute;
+
+  top: 6px;
+  right: 10px;
+
+  font-size: 8px;
+
+  color:
+    rgba(100,116,139,.60);
+
+  font-weight: 700;
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   FRONT
+========================================================= */
+
+.front-side {
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+
+/* =========================================================
+   ENGLISH VOCABULARY
+========================================================= */
+
+.front-title {
+  text-align: center;
+
+  color: #4c1d95;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  padding: 2px 0;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   KEY DIFFERENCE HEADER
+========================================================= */
+
+.key-header {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9a9e 0%,
+      #fecfef 100%
+    );
+
+  border-radius: 14px;
+
+  padding: 8px;
+
+  text-align: center;
+
+  box-shadow:
+    0 4px 12px
+    rgba(255,154,158,.30);
+
+  flex-shrink: 0;
+}
+
+.key-header span {
+  color: #721c24;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: .7px;
+}
+
+
+/* =========================================================
+   FRONT WORDS
+========================================================= */
+
+.front-word {
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #f8fafc;
+
+  border:
+    2px solid
+    #e2e8f0;
+
+  border-radius: 18px;
+
+  padding: 10px;
+
+  box-shadow:
+    0 5px 15px
+    rgba(0,0,0,.04);
+}
+
+.front-word.second {
+  background: #f0f9ff;
+
+  border-color: #bae6fd;
+}
+
+.front-word-text {
+  font-size:
+    clamp(
+      32px,
+      9vw,
+      46px
+    );
+
+  line-height: 1.05;
+
+  font-weight: 800;
+
+  color: #1e293b;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   FRONT HINT
+========================================================= */
+
+.front-hint {
+  text-align: center;
+
+  color: #94a3b8;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  padding: 2px 0;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   LEARNED BUTTON
+========================================================= */
+
+.front-action {
+  display: flex;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.learned-btn {
+  border: none;
+
+  border-radius: 10px;
+
+  background:
+    #16a34a;
+
+  color: white;
+
+  padding:
+    8px 20px;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 10px
+    rgba(22,163,74,.20);
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.details-side {
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   DETAILS TITLE
+========================================================= */
+
+.details-title {
+  text-align: center;
+
+  color: #4c1d95;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   KEY DIFFERENCE
+========================================================= */
+
+.difference-box {
+  background:
+    #fff8e6;
+
+  border-left:
+    5px solid
+    #f59e0b;
+
+  border-radius:
+    11px;
+
+  padding:
+    8px 10px;
+
+  flex-shrink: 0;
+
+  max-height: 88px;
+
+  overflow: hidden;
+}
+
+.difference-label {
+  color: #b45309;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: .5px;
+
+  margin-bottom: 3px;
+}
+
+.difference-text {
+  color: #451a03;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   DETAIL WORD CARD
+========================================================= */
+
+.detail-word {
+  flex: 1;
+
+  min-height: 0;
+
+  background:
+    #f8fafc;
+
+  border:
+    2px solid
+    #e2e8f0;
+
+  border-radius:
+    15px;
+
+  padding:
+    8px 10px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    6px;
+
+  overflow:
+    hidden;
+}
+
+.detail-word.second {
+  background:
+    #f0f9ff;
+
+  border-color:
+    #bae6fd;
+}
+
+
+/* =========================================================
+   ROW 1 = WORD + SYN
+========================================================= */
+
+.detail-header {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 8px;
+
+  min-width: 0;
+
+  flex-shrink: 0;
+}
+
+.detail-word-name {
+  font-size: 24px;
+
+  font-weight: 800;
+
+  line-height: 1.05;
+
+  color: #1e293b;
+
+  min-width: 0;
+
+  flex: 1;
+
+  word-break: break-word;
+}
+
+.syn-line {
+  flex-shrink: 0;
+
+  max-width: 58%;
+}
+
+
+/* =========================================================
+   ROW 2 = MEANING + ANT
+========================================================= */
+
+.meaning-row {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 8px;
+
+  min-width: 0;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SYN / ANT
+========================================================= */
+
+.badge {
+  display: inline-block;
+
+  padding:
+    5px 9px;
+
+  border-radius:
+    50px;
+
+  font-size:
+    17px;
+
+  font-weight:
+    800;
+
+  line-height:
+    1.12;
+
+  white-space:
+    normal;
+
+  word-break:
+    break-word;
+
+  overflow:
+    visible;
+
+  max-width:
+    100%;
+
+  text-align:
+    center;
+}
+
+.badge-syn {
+  background:
+    #d1fae5;
+
+  color:
+    #065f46;
+}
+
+.badge-ant {
+  background:
+    #ffe4e6;
+
+  color:
+    #9f1239;
+
+  flex-shrink: 0;
+
+  max-width: 45%;
+}
+
+
+/* =========================================================
+   MEANING
+   Larger box
+========================================================= */
+
+.info-text {
+  flex: 1;
+
+  min-width: 0;
+
+  min-height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  background:
+    #fff8e6;
+
+  border-radius:
+    11px;
+
+  padding:
+    10px 12px;
+
+  font-size:
+    22px;
+
+  font-weight:
+    800;
+
+  line-height:
+    1.25;
+
+  color:
+    #451a03;
+
+  word-break:
+    break-word;
+}
+
+.detail-word.second
+.info-text {
+  background:
+    #f0fdf4;
+
+  color:
+    #052e16;
+}
+
+
+/* =========================================================
+   EXAMPLE
+   Smaller box, larger text
+========================================================= */
+
+.sentence-text {
+  width: 100%;
+
+  background:
+    #ffffff;
+
+  border:
+    1px dashed
+    #cbd5e1;
+
+  border-radius:
+    8px;
+
+  padding:
+    5px 8px;
+
+  min-height:
+    34px;
+
+  max-height:
+    50px;
+
+  font-size:
+    18px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.22;
+
+  color:
+    #334155;
+
+  font-style:
+    italic;
+
+  word-break:
+    break-word;
+
+  overflow:
+    hidden;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   DETAILS ACTIONS
+========================================================= */
+
+.details-actions {
+  display: flex;
+
+  justify-content:
+    center;
+
+  gap:
+    6px;
+
+  flex-shrink: 0;
+}
+
+.details-actions button {
+  border:
+    none;
+
+  border-radius:
+    9px;
+
+  padding:
+    7px 11px;
+
+  color:
+    white;
+
+  font-size:
+    10px;
+
+  font-weight:
+    800;
+
+  cursor:
+    pointer;
+}
+
+.btn-learning {
+  background:
+    #d97706;
+}
+
+.btn-mastered {
+  background:
+    #16a34a;
+}
+
+
+/* =========================================================
+   LOADING / EMPTY
+========================================================= */
+
+.loading,
+.empty {
+  width: 100%;
+  height: 100%;
+
+  background:
+    white;
+
+  border-radius:
+    24px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-direction:
+    column;
+
+  text-align:
+    center;
+
+  padding:
+    20px;
+
+  box-shadow:
+    0 20px 40px
+    rgba(0,0,0,.18);
+}
+
+.empty h2 {
+  color:
+    #1e293b;
+
+  font-size:
+    18px;
+
+  margin-bottom:
+    7px;
+}
+
+.empty p {
+  color:
+    #64748b;
+
+  font-size:
+    12px;
+
+  line-height:
+    1.5;
+
+  margin-bottom:
+    12px;
+}
+
+.empty button {
+  border:
+    none;
+
+  border-radius:
+    9px;
+
+  padding:
+    8px 14px;
+
+  background:
+    #4c1d95;
+
+  color:
+    white;
+
+  cursor:
+    pointer;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+  body {
+    padding:
+      4px;
+  }
+
+  .app {
+    width:
+      100%;
+
+    height:
+      99dvh;
+
+    max-height:
+      none;
+
+    gap:
+      4px;
+  }
+
+  .card {
+    padding:
+      8px;
+
+    border-radius:
+      21px;
+  }
+
+  .front-title {
+    font-size:
+      15px;
+  }
+
+  .front-word-text {
+    font-size:
+      clamp(
+        30px,
+        10vw,
+        42px
+      );
+  }
+
+  .detail-word-name {
+    font-size:
+      21px;
+  }
+
+  .badge {
+    font-size:
+      15px;
+
+    padding:
+      4px 7px;
+  }
+
+  .info-text {
+    font-size:
+      19px;
+
+    min-height:
+      52px;
+
+    padding:
+      8px 10px;
+  }
+
+  .sentence-text {
+    font-size:
+      16px;
+
+    max-height:
+      48px;
+  }
+
+  .difference-text {
+    font-size:
+      14px;
+  }
+}
+
+
+/* =========================================================
+   SHORT MOBILE
+========================================================= */
+
+@media (max-height: 680px) {
+
+  .app {
+    height:
+      99dvh;
+  }
+
+  .card {
+    padding:
+      7px;
+  }
+
+  .front-title {
+    font-size:
+      13px;
+  }
+
+  .key-header {
+    padding:
+      6px;
+  }
+
+  .key-header span {
+    font-size:
+      10px;
+  }
+
+  .front-word-text {
+    font-size:
+      29px;
+  }
+
+  .detail-word {
+    padding:
+      6px 8px;
+
+    gap:
+      4px;
+  }
+
+  .detail-word-name {
+    font-size:
+      18px;
+  }
+
+  .badge {
+    font-size:
+      13px;
+
+    padding:
+      3px 5px;
+  }
+
+  .info-text {
+    font-size:
+      17px;
+
+    min-height:
+      44px;
+
+    padding:
+      6px 8px;
+  }
+
+  .sentence-text {
+    font-size:
+      14px;
+
+    max-height:
+      42px;
+
+    padding:
+      4px 7px;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 601px) {
+
+  .app {
+    width:
+      390px;
+
+    height:
+      min(94vh, 700px);
+  }
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+body.theme-dark .card {
+  background:
+    #111827;
+}
+
+body.theme-dark .front-title,
+body.theme-dark .details-title {
+  color:
+    #ddd6fe;
+}
+
+body.theme-dark .front-word,
+body.theme-dark .detail-word {
+  background:
+    #1e293b;
+
+  border-color:
+    #475569;
+}
+
+body.theme-dark .front-word.second,
+body.theme-dark .detail-word.second {
+  background:
+    #172554;
+
+  border-color:
+    #1e40af;
+}
+
+body.theme-dark .front-word-text,
+body.theme-dark .detail-word-name {
+  color:
+    #f8fafc;
+}
+
+body.theme-dark .info-text {
+  background:
+    #422006;
+
+  color:
+    #fef3c7;
+}
+
+body.theme-dark
+.detail-word.second
+.info-text {
+  background:
+    #052e16;
+
+  color:
+    #dcfce7;
+}
+
+body.theme-dark .sentence-text {
+  background:
+    #1e293b;
+
+  border-color:
+    #475569;
+
+  color:
+    #e2e8f0;
+}
+
+</style>
 </head>
 
-<body class="theme-sunset">
 
-  <div class="app-header">
-    <div class="level-selector">
-      <button class="level-btn active" id="lvl-1" onclick="selectLevel(1)">Lvl 1</button>
-      <button class="level-btn" id="lvl-2" onclick="selectLevel(2)">Lvl 2</button>
-      <button class="level-btn" id="lvl-3" onclick="selectLevel(3)">Lvl 3</button>
-      <button class="level-btn" id="lvl-4" onclick="selectLevel(4)">Lvl 4</button>
+<body>
+
+
+<div class="app">
+
+
+  <!-- =====================================================
+       TOP BAR
+  ====================================================== -->
+
+  <div class="top-bar">
+
+    <div class="app-title">
+      English Vocabulary
     </div>
 
-    <div class="mode-nav">
-      <button class="mode-tab active" id="tab-learning" onclick="switchMode('learning')">Learning Pool (<span id="learn-count">0</span>)</button>
-      <button class="mode-tab" id="tab-revision" onclick="switchMode('revision')">Revision Mode (<span id="rev-count">0</span>)</button>
-    </div>
+
+    <button
+      class="theme-toggle"
+      id="themeToggle"
+      onclick="toggleTheme()"
+      title="Change theme">
+
+      🎨
+
+    </button>
+
   </div>
 
-  <div class="scene">
-    <div class="card" id="flashcard">
 
-      <div class="card-face card-front">
-        <div class="front-words-wrapper">
-          <div class="front-word-card word-1">
-            <span class="front-word-text" id="front-w1">Loading...</span>
-          </div>
-          <div class="vs-badge">VS</div>
-          <div class="front-word-card word-2">
-            <span class="front-word-text" id="front-w2">Loading...</span>
-          </div>
-        </div>
+  <!-- =====================================================
+       CONTROLS
+  ====================================================== -->
+
+  <div class="controls">
+
+    <button
+      onclick="setMode('learning')">
+
+      Learning
+
+    </button>
+
+
+    <button
+      class="secondary"
+      onclick="setMode('revision')">
+
+      Revision
+
+    </button>
+
+
+    <select
+      id="cardCount"
+      onchange="loadCards()">
+
+      <option value="10">
+        10 Cards
+      </option>
+
+      <option value="20">
+        20 Cards
+      </option>
+
+      <option value="30">
+        30 Cards
+      </option>
+
+      <option value="40">
+        40 Cards
+      </option>
+
+      <option value="50">
+        50 Cards
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <!-- =====================================================
+       STATUS
+  ====================================================== -->
+
+  <div
+    id="status"
+    class="status">
+
+    Loading...
+
+  </div>
+
+
+  <!-- =====================================================
+       CARD
+  ====================================================== -->
+
+  <div
+    id="cardContainer">
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   GOOGLE APPS SCRIPT WEB APP URL
+========================================================= */
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwrd05bPS6U1pPJ8H6jqp-XxgsS6QbHbU9V2PdXOrdsE_TPsuntlQbCxMYfyTnfi-k6/exec";
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let cards = [];
+
+let currentIndex = 0;
+
+let currentMode = "learning";
+
+let showingDetails = false;
+
+let touchStartX = 0;
+
+let touchStartY = 0;
+
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+const themeList = [
+  "theme-blue",
+  "theme-ocean",
+  "theme-sunset",
+  "theme-green",
+  "theme-dark"
+];
+
+let currentTheme = 0;
+
+
+function loadSavedTheme() {
+
+  const saved =
+    localStorage.getItem(
+      "vocabTheme"
+    );
+
+
+  if (!saved) {
+
+    document.body.classList.add(
+      "theme-blue"
+    );
+
+    return;
+
+  }
+
+
+  const savedIndex =
+    themeList.indexOf(
+      saved
+    );
+
+
+  if (savedIndex >= 0) {
+
+    currentTheme =
+      savedIndex;
+
+    document.body.classList.add(
+      saved
+    );
+
+  }
+
+  else {
+
+    document.body.classList.add(
+      "theme-blue"
+    );
+
+  }
+
+}
+
+
+function toggleTheme() {
+
+  document.body.classList.remove(
+    ...themeList
+  );
+
+
+  currentTheme++;
+
+  if (
+    currentTheme >=
+    themeList.length
+  ) {
+
+    currentTheme = 0;
+
+  }
+
+
+  document.body.classList.add(
+    themeList[currentTheme]
+  );
+
+
+  localStorage.setItem(
+    "vocabTheme",
+    themeList[currentTheme]
+  );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+window.addEventListener(
+  "load",
+  function() {
+
+    loadSavedTheme();
+
+    loadCards();
+
+  }
+);
+
+
+/* =========================================================
+   MODE
+========================================================= */
+
+function setMode(mode) {
+
+  currentMode =
+    mode;
+
+  currentIndex =
+    0;
+
+  showingDetails =
+    false;
+
+  loadCards();
+
+}
+
+
+/* =========================================================
+   LOAD CARDS
+========================================================= */
+
+async function loadCards() {
+
+  const container =
+    document.getElementById(
+      "cardContainer"
+    );
+
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  const count =
+    Number(
+      document.getElementById(
+        "cardCount"
+      ).value
+    );
+
+
+  showingDetails =
+    false;
+
+
+  container.innerHTML = `
+    <div class="loading">
+      Loading cards...
+    </div>
+  `;
+
+
+  status.textContent =
+    "Loading " +
+    currentMode +
+    " cards...";
+
+
+  if (
+    API_URL ===
+    "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE"
+  ) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        <h2>
+          API URL Required
+        </h2>
+
+        <p>
+          Please put your deployed Google Apps Script
+          Web App URL into API_URL.
+        </p>
+
       </div>
 
-      <div class="card-face card-back">
-        <div class="difference-box">
-          <span class="section-title">⚡ Key Difference</span>
-          <p class="difference-text" id="back-diff">Loading...</p>
+    `;
+
+    status.textContent =
+      "";
+
+    return;
+
+  }
+
+
+  try {
+
+    const url =
+      API_URL +
+      "?action=cards" +
+      "&mode=" +
+      encodeURIComponent(
+        currentMode
+      ) +
+      "&limit=" +
+      count;
+
+
+    const response =
+      await fetch(
+        url,
+        {
+          method:
+            "GET",
+
+          cache:
+            "no-store"
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP error: " +
+        response.status
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !data.success
+    ) {
+
+      throw new Error(
+        data.error ||
+        "Unable to fetch cards."
+      );
+
+    }
+
+
+    cards =
+      Array.isArray(
+        data.cards
+      )
+      ? data.cards
+      : [];
+
+
+    currentIndex =
+      0;
+
+    showingDetails =
+      false;
+
+
+    status.textContent =
+      cards.length +
+      " cards loaded";
+
+
+    renderCard();
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        <h2>
+          Error
+        </h2>
+
+        <p>
+          ${escapeHtml(
+            error.message
+          )}
+        </p>
+
+        <button
+          onclick="loadCards()">
+
+          Try Again
+
+        </button>
+
+      </div>
+
+    `;
+
+
+    status.textContent =
+      "Could not load cards.";
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER CARD
+========================================================= */
+
+function renderCard() {
+
+  const container =
+    document.getElementById(
+      "cardContainer"
+    );
+
+
+  if (
+    !cards ||
+    cards.length === 0
+  ) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        <h2>
+          No Cards Found
+        </h2>
+
+        <p>
+          There are no complete vocabulary cards
+          available in this mode.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  if (
+    currentIndex < 0
+  ) {
+
+    currentIndex =
+      0;
+
+  }
+
+
+  if (
+    currentIndex >=
+    cards.length
+  ) {
+
+    currentIndex =
+      cards.length - 1;
+
+  }
+
+
+  const card =
+    cards[currentIndex];
+
+
+  /* =======================================================
+     FRONT
+  ======================================================= */
+
+  if (!showingDetails) {
+
+    container.innerHTML = `
+
+      <div
+        class="card"
+        id="flashCard">
+
+
+        <div class="card-number">
+
+          ${currentIndex + 1}/${cards.length}
+
         </div>
 
-        <div class="word-details-card word-1">
-          <div class="word-header-row">
-            <span class="word-name" id="back-w1-name">Word 1</span>
-            <div class="tags-group">
-              <span class="tag-badge tag-syn" id="back-w1-syn">Syn</span>
-              <span class="tag-badge tag-ant" id="back-w1-ant">Ant</span>
+
+        <div class="front-side">
+
+
+          <div class="front-title">
+
+            English Vocabulary
+
+          </div>
+
+
+          <div class="key-header">
+
+            <span>
+              KEY DIFFERENCE
+            </span>
+
+          </div>
+
+
+          <!-- WORD 1 -->
+
+          <div class="front-word">
+
+            <div class="front-word-text">
+
+              ${escapeHtml(
+                card.w1.name
+              )}
+
             </div>
-          </div>
-          <div class="meaning-block">
-            <span class="inner-label">Meaning</span>
-            <p class="meaning-content" id="back-w1-mean">Meaning text</p>
-          </div>
-          <div class="sentence-block">
-            <span class="inner-label">Sentence Example</span>
-            <p class="sentence-content" id="back-w1-sent">Sentence text</p>
-          </div>
-        </div>
 
-        <div class="word-details-card word-2">
-          <div class="word-header-row">
-            <span class="word-name" id="back-w2-name">Word 2</span>
-            <div class="tags-group">
-              <span class="tag-badge tag-syn" id="back-w2-syn">Syn</span>
-              <span class="tag-badge tag-ant" id="back-w2-ant">Ant</span>
+          </div>
+
+
+          <!-- WORD 2 -->
+
+          <div class="front-word second">
+
+            <div class="front-word-text">
+
+              ${escapeHtml(
+                card.w2.name
+              )}
+
             </div>
+
           </div>
-          <div class="meaning-block">
-            <span class="inner-label">Meaning</span>
-            <p class="meaning-content" id="back-w2-mean">Meaning text</p>
+
+
+          <div class="front-hint">
+
+            👉 Swipe right for details
+
           </div>
-          <div class="sentence-block">
-            <span class="inner-label">Sentence Example</span>
-            <p class="sentence-content" id="back-w2-sent">Sentence text</p>
-          </div>
-        </div>
-      </div>
 
-    </div>
-  </div>
 
-  <div class="bottom-bar">
-    <span class="gesture-hint">➡️ Flip | ⬅️ Revision | ⬆️ Next</span>
-    <div class="footer-btns">
-      <button class="theme-btn-small" onclick="openModal()">+ Add Card</button>
-      <button class="theme-btn-small" onclick="toggleTheme(event)">🎨 Theme</button>
-    </div>
-  </div>
+          <div class="front-action">
 
-  <div class="modal" id="add-modal">
-    <div class="modal-content">
-      <h3>Add New Word Pair</h3>
-      <div class="form-group">
-        <label>Select Level</label>
-        <select id="modal-level">
-          <option value="1">Level 1 (Beginner)</option>
-          <option value="2">Level 2 (Intermediate)</option>
-          <option value="3">Level 3 (Advanced)</option>
-          <option value="4">Level 4 (Master)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Word 1 Title</label>
-        <input type="text" id="modal-w1" placeholder="e.g. Affect">
-      </div>
-      <div class="form-group">
-        <label>Word 2 Title</label>
-        <input type="text" id="modal-w2" placeholder="e.g. Effect">
-      </div>
-      <div class="form-group">
-        <label>Key Difference Summary</label>
-        <textarea id="modal-diff" rows="2" placeholder="Brief distinction..."></textarea>
-      </div>
-      <div class="modal-actions">
-        <button class="modal-btn btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="modal-btn btn-save" onclick="saveCustomCard()">Save Card</button>
-      </div>
-    </div>
-  </div>
+            <button
+              class="learned-btn"
+              onclick="moveCurrentFromFront()">
 
-  <!-- MASTER DATABASE (PART 3 & PART 4 HIGH-YIELD EXAM EXPANSION) -->
-  <script>
-    const rawMasterData = {
-      1: [
-        ["Accept", "Except", "Accept means to receive willingly, whereas Except means excluding."],
-        ["Affect", "Effect", "Affect is a verb (to influence), whereas Effect is a noun (the result)."],
-        ["Advice", "Advise", "Advice is a noun (guidance), whereas Advise is a verb (to give guidance)."],
-        ["Adverse", "Averse", "Adverse means harmful or unfavorable, whereas Averse means strong dislike."],
-        ["Altar", "Alter", "Altar is a sacred structure for worship, whereas Alter means to change."],
-        ["Allusion", "Illusion", "Allusion is an indirect reference, whereas Illusion is a deceptive trick."],
-        ["Ascent", "Assent", "Ascent means a climb upward, whereas Assent means agreement."],
-        ["Bare", "Bear", "Bare means uncovered, whereas Bear means to carry or endure."],
-        ["Brake", "Break", "Brake stops a vehicle, whereas Break means to smash into pieces."],
-        ["Canvas", "Canvass", "Canvas is a fabric, whereas Canvass means to solicit votes."],
-        ["Capital", "Capitol", "Capital refers to a chief city or wealth, Capitol is a building."],
-        ["Censor", "Censure", "Censor suppresses objectional content, Censure means to criticize."],
-        ["Cite", "Site", "Cite means to quote or reference, Site means a location."],
-        ["Coarse", "Course", "Coarse means rough or crude, Course means a route or study."],
-        ["Complement", "Compliment", "Complement completes something, Compliment is praise."],
-        ["Council", "Counsel", "Council is an administrative group, Counsel means advice."],
-        ["Desert", "Dessert", "Desert is arid land, Dessert is a sweet post-meal treat."],
-        ["Elicit", "Illicit", "Elicit means to draw out, Illicit means illegal or forbidden."],
-        ["Eminent", "Imminent", "Eminent means famous, Imminent means happening very soon."],
-        ["Ensure", "Insure", "Ensure means to make certain, Insure means financial protection."],
-        ["Allowed", "Aloud", "Allowed means permitted, whereas Aloud means audibly out loud."],
-        ["Angel", "Angle", "Angel is a spiritual being, whereas Angle is a geometric shape."],
-        ["Bail", "Bale", "Bail is security money for release, whereas Bale is a large bundle of goods."],
-        ["Base", "Bass", "Base is foundation, whereas Bass refers to low-frequency sound/music."],
-        ["Berth", "Birth", "Berth is a sleeping bed on a train, whereas Birth is the act of being born."],
-        ["Blow", "Blue", "Blow is wind movement or a hit, whereas Blue is the color."],
-        ["Boar", "Bore", "Boar is a wild pig, whereas Bore means to drill or cause boredom."],
-        ["Board", "Bored", "Board is a flat piece of wood, whereas Bored means feeling uninterested."],
-        ["Born", "Borne", "Born means brought into life, whereas Borne means carried or endured."],
-        ["Bridal", "Bridle", "Bridal relates to a wedding, whereas Bridle is horse headgear."]
-      ],
-      2: [
-        ["Allay", "Alleviate", "Allay calms fears/doubts, Alleviate makes pain lighter."],
-        ["Appraise", "Apprise", "Appraise evaluates monetary value, Apprise means to notify."],
-        ["Apprehend", "Comprehend", "Apprehend means to arrest/fear, Comprehend means to understand."],
-        ["Assault", "Assail", "Assault is physical attack, Assail means attacking verbally."],
-        ["Avenge", "Revenge", "Avenge seeks justice for others, Revenge is personal retaliation."],
-        ["Beside", "Besides", "Beside means next to, Besides means in addition to."],
-        ["Childish", "Childlike", "Childish means immature (bad), Childlike means innocent (good)."],
-        ["Command", "Commend", "Command means giving orders, Commend means praising publicly."],
-        ["Complain", "Complaint", "Complain is the verb, Complaint is the noun/grievance."],
-        ["Confidant", "Confident", "Confidant is a trusted friend, Confident means self-assured."],
-        ["Contemptible", "Contemptuous", "Contemptible deserves scorn, Contemptuous expresses scorn."],
-        ["Continual", "Continuous", "Continual has short breaks, Continuous is completely unbroken."],
-        ["Defuse", "Diffuse", "Defuse reduces danger/tension, Diffuse means to spread out."],
-        ["Deprecate", "Depreciate", "Deprecate expresses disapproval, Depreciate reduces value."],
-        ["Discreet", "Discrete", "Discreet means secretive/cautious, Discrete means separate."],
-        ["Economic", "Economical", "Economic relates to economy, Economical means thrifty/cheap."],
-        ["Eligible", "Illegible", "Eligible means qualified, Illegible means unreadable text."],
-        ["Elusive", "Illusive", "Elusive means hard to catch, Illusive means deceptive."],
-        ["Historic", "Historical", "Historic means famous in history, Historical relates to past history."],
-        ["Judicial", "Judicious", "Judicial relates to courts, Judicious means wise and prudent."],
-        ["Adopt", "Adapt", "Adopt means to take as one's own, Adapt means to adjust to."],
-        ["Collision", "Collusion", "Collision is a crash, Collusion is secret illegal cooperation."],
-        ["Corporal", "Corporeal", "Corporal relates to the body, Corporeal means physical/tangible."],
-        ["Credible", "Credulous", "Credible is believable, Credulous means easily gullible."],
-        ["Deceit", "Deception", "Deceit is dishonest character, Deception is a specific lie."],
-        ["Abstain", "Refrain", "Abstain means refraining from pleasure, Refrain means stopping an action."],
-        ["Accede", "Concede", "Accede means to agree to demand, Concede means admitting defeat."],
-        ["Adjoin", "Adjourn", "Adjoin means being next to, Adjourn means to postpone."],
-        ["Affection", "Affectation", "Affection is love, Affectation is artificial fake behavior."],
-        ["Amicable", "Amiable", "Amicable refers to peaceful deals, Amiable to friendly people."]
-      ],
-      3: [
-        ["Accession", "Concession", "Accession is attaining position, Concession is granting a right."],
-        ["Artful", "Artistic", "Artful means sly/crafty, Artistic means creative and skilled."],
-        ["Beneficent", "Beneficial", "Beneficent means doing charity, Beneficial means helpful results."],
-        ["Ceremonial", "Ceremonious", "Ceremonial relates to rites, Ceremonious means stiffly formal."],
-        ["Complaisant", "Complacent", "Complaisant eager to please, Complacent is smugly content."],
-        ["Comprehensive", "Comprehensible", "Comprehensive is thorough, Comprehensible is understandable."],
-        ["Desirous", "Desirable", "Desirous means wanting, Desirable means worth wanting."],
-        ["Distinct", "Distinctive", "Distinct means separate, Distinctive means unique trait."],
-        ["Egoist", "Egotist", "Egoist values self-interest, Egotist is a boastful braggart."],
-        ["Exhaustive", "Exhausted", "Exhaustive means thorough/complete, Exhausted means tired."],
-        ["Expedient", "Expeditious", "Expedient is convenient, Expeditious means done fast."],
-        ["Flaunt", "Flout", "Flaunt means showing off, Flout means disobeying rules."],
-        ["Ingenious", "Ingenuous", "Ingenious is brilliant, Ingenuous is naive and candid."],
-        ["Impassive", "Impassioned", "Impassive shows no emotion, Impassioned is full of passion."],
-        ["Masterly", "Masterful", "Masterly shows expert skill, Masterful means domineering."],
-        ["Memorable", "Memorial", "Memorable is worth remembering, Memorial preserves memory."],
-        ["Notable", "Notorious", "Notable famous for good, Notorious famous for bad."],
-        ["Restive", "Restful", "Restive means restless/stubborn, Restful means peaceful."],
-        ["Sensual", "Sensuous", "Sensual relates to body desires, Sensuous to aesthetic art/nature."],
-        ["Apposite", "Opposite", "Apposite means suitable/apt, Opposite means contrary."],
-        ["Contiguous", "Contingent", "Contiguous means touching/next, Contingent means dependent."],
-        ["Decent", "Dissent", "Decent means respectable, Dissent means disagreement."],
-        ["Detract", "Distract", "Detract reduces value, Distract diverts attention."],
-        ["Exorcise", "Exercise", "Exorcise expels evil spirits, Exercise is physical workout."],
-        ["Implicit", "Explicit", "Implicit is implied, Explicit is clearly stated."],
-        ["Indict", "Indite", "Indict means to formally charge, Indite means to compose/write."],
-        ["Ordinance", "Ordnance", "Ordinance is a law/decree, Ordnance refers to military weapons."],
-        ["Abrogate", "Arrogate", "Abrogate repeals a law, Arrogate claims right without justification."],
-        ["Abstract", "Abstruse", "Abstract is non-concrete, Abstruse is hard to understand."],
-        ["Acquisitive", "Inquisitive", "Acquisitive is greedy, Inquisitive is curious."],
-        ["Admonish", "Admonition", "Admonish is the verb, Admonition is the warning phrase."],
-        ["Affable", "Effusive", "Affable is friendly, Effusive is overly emotional/gratuitous."],
-        ["Aggravate", "Exasperate", "Aggravate makes worse, Exasperate annoys someone."],
-        ["Allegory", "Analogy", "Allegory is a symbolic story, Analogy is a comparison."],
-        ["Alleviate", "Ameliorate", "Alleviate eases pain, Ameliorate improves bad conditions."],
-        ["Ambiguous", "Ambivalent", "Ambiguous has double meaning, Ambivalent has mixed feelings."],
-        ["Ancillary", "Auxiliary", "Ancillary is secondary support, Auxiliary is backup capacity."],
-        ["Aphorism", "Truism", "Aphorism is a witty principle, Truism is an obvious truth."],
-        ["Ascetic", "Aesthetic", "Ascetic avoids pleasure, Aesthetic appreciates beauty."],
-        ["Avarice", "Avidity", "Avarice is extreme greed, Avidity is keen enthusiasm."],
-        ["Abjure", "Adjure", "Abjure means renouncing belief, Adjure means commanding someone."],
-        ["Adumbrate", "Shadow", "Adumbrate means to foreshadow faintly, Shadow means to darken."],
-        ["Affectation", "Affection", "Affectation is artificial behavior, Affection is genuine fondness."],
-        ["Anathema", "Curse", "Anathema is a detested person/thing, Curse is a formal wish of harm."],
-        ["Arrogant", "Arrogating", "Arrogant means haughty, Arrogating means claiming rights without justification."],
-        ["Audacious", "Auditable", "Audacious means fearlessly bold, Auditable means subject to financial audit."],
-        ["Blandishment", "Blandness", "Blandishment is flattering speech, Blandness is lack of flavor/excitement."],
-        ["Chicanery", "Trickery", "Chicanery is legal deception, Trickery is general deceit."],
-        ["Circumlocution", "Circumscription", "Circumlocution is evasive wordiness, Circumscription is imposing bounds."],
-        ["Compulsion", "Compunction", "Compulsion is an irresistible urge, Compunction is moral guilt/remorse."]
-      ],
-      4: [
-        ["Disinterested", "Uninterested", "Disinterested means impartial, Uninterested means bored."],
-        ["Perspicacious", "Perspicuous", "Perspicacious is a sharp mind, Perspicuous is clear writing."],
-        ["Precipitate", "Precipitous", "Precipitate means sudden/rash, Precipitous means steep."],
-        ["Temporize", "Temporal", "Temporize means to stall, Temporal relates to worldly time."],
-        ["Enormity", "Enormousness", "Enormity is extreme evil, Enormousness is massive size."],
-        ["Exculpate", "Inculpate", "Exculpate clears blame, Inculpate accuses of guilt."],
-        ["Tortuous", "Torturous", "Tortuous means winding/twisting, Torturous means causing pain."],
-        ["Turbid", "Turgid", "Turbid is muddy liquid, Turgid is pompous/bloated text."],
-        ["Vitiate", "Obviate", "Vitiate spoils quality, Obviate prevents a difficulty."],
-        ["Abnegation", "Abrogation", "Abnegation is self-denial, Abrogation is abolishing a law."],
-        ["Absolve", "Exonerate", "Absolve frees from sin, Exonerate clears legal charges."],
-        ["Abstemious", "Abstinent", "Abstemious is moderate eating, Abstinent refrains completely."],
-        ["Adulation", "Flattery", "Adulation is servile praise, Flattery is insincere compliment."],
-        ["Circumlocution", "Circumscription", "Circumlocution is wordy speech, Circumscription is limit."],
-        ["Equable", "Equitable", "Equable is calm-tempered, Equitable means fair/just."],
-        ["Obsequious", "Servile", "Obsequious is overly attentive, Servile means slavish."],
-        ["Peremptory", "Preemptory", "Peremptory demands obedience, Preemptory takes early action."],
-        ["Proscribe", "Prescribe", "Proscribe bans/forbids, Prescribe recommends officially."],
-        ["Bellicose", "Belligerent", "Bellicose is hostile temperament, Belligerent actively fighting."],
-        ["Complaisance", "Compliance", "Complaisance is eagerness to please, Compliance is obeying."],
-        ["Aggrandize", "Augment", "Aggrandize inflates power/status, Augment increases size."],
-        ["Alacrity", "Celerity", "Alacrity is cheerful readiness, Celerity is physical swiftness."],
-        ["Anomaly", "Aberration", "Anomaly is deviation from rule, Aberration is mental departure."],
-        ["Apathy", "Antipathy", "Apathy is lack of care, Antipathy is active hatred."],
-        ["Apostasy", "Defection", "Apostasy abandons religion, Defection abandons country."],
-        ["Avarice", "Covetousness", "Avarice is wealth greed, Covetousness desires others' property."],
-        ["Blasphemy", "Sacrilege", "Blasphemy insults God, Sacrilege disrespects sacred items."],
-        ["Brevity", "Conciseness", "Brevity is shortness of time, Conciseness is expressing much in few words."],
-        ["Calumny", "Slander", "Calumny is false accusation, Slander is spoken defamation."],
-        ["Caprice", "Whim", "Caprice is sudden impulse, Whim is a passing desire."],
-        ["Chicanery", "Duplicity", "Chicanery is trickery, Duplicity is double-dealing."],
-        ["Clemency", "Lenience", "Clemency is official mercy, Lenience is mild discipline."],
-        ["Cognizant", "Aware", "Cognizant is formal knowledge, Aware is general perception."],
-        ["Contrite", "Penitence", "Contrite is feeling sorry, Penitence is active repentance."],
-        ["Decorum", "Propriety", "Decorum is dignified behavior, Propriety is moral standard."],
-        ["Diffidence", "Timidity", "Diffidence is self-doubt, Timidity is shyness."],
-        ["Didactic", "Moralizing", "Didactic intends to teach, Moralizing preaches judgment."],
-        ["Effrontery", "Audacity", "Effrontery is insolent arrogance, whereas Audacity is willingness to take bold risks."],
-        ["Conciliate", "Reconcile", "Conciliate means to win over from anger, Reconcile means to restore friendly relations."],
-        ["Epicure", "Gourmand", "Epicure appreciates refined food/art, Gourmand is an excessive overeater."],
-        ["Exhort", "Extort", "Exhort means to strongly encourage, Extort means to obtain money by force/threats."],
-        ["Expiate", "Expatriate", "Expiate means to make amends for a sin, Expatriate means living outside one's native country."],
-        ["Imprimatur", "Imprint", "Imprimatur is official approval or license, Imprint is a mark pressed onto a surface."],
-        ["Impugn", "Impinge", "Impugn means to challenge the validity of, Impinge means to encroach or trespass upon."],
-        ["Inexorable", "Unyielding", "Inexorable means impossible to stop or persuade, Unyielding means physically or mentally rigid."],
-        ["Inimical", "Inimitable", "Inimical means harmful or hostile, Inimitable means unique and impossible to copy."],
-        ["Inveterate", "Invertebrate", "Inveterate means long-established by habit, Invertebrate means an animal without a backbone."],
-        ["Obsequious", "Obsequies", "Obsequious means servilely attentive, Obsequies refers to funeral rites or ceremonies."],
-        ["Perquisite", "Prerequisite", "Perquisite is an extra perk/privilege of a job, Prerequisite is a required prior condition."],
-        ["Prodigal", "Prodigious", "Prodigal means recklessly wasteful, Prodigious means remarkably impressive in size or degree."]
-      ]
-    };
-
-    function buildFullCard(w1, w2, diff, lvl, index) {
-      return {
-        id: `${lvl}-${index}-${Date.now()}`,
-        diff: diff,
-        w1: { name: w1, syn: "Core Term", ant: "Contrast", mean: `Primary meaning & usage for ${w1}.`, sent: `"Understanding ${w1} in FPSC/CSS exam questions."` },
-        w2: { name: w2, syn: "Core Term", ant: "Contrast", mean: `Primary meaning & usage for ${w2}.`, sent: `"Differentiating ${w2} from its common counterpart."` }
-      };
-    }
-
-    let currentLevel = 1;
-    let currentMode = 'learning';
-    let currentIndex = 0;
-
-    let masterPool = JSON.parse(localStorage.getItem('flashcard_master_v6')) || {};
-    let learningPool = JSON.parse(localStorage.getItem('flashcard_learning_v6')) || { 1: [], 2: [], 3: [], 4: [] };
-    let revisionPool = JSON.parse(localStorage.getItem('flashcard_revision_v6')) || { 1: [], 2: [], 3: [], 4: [] };
-
-    if (!localStorage.getItem('flashcard_master_v6')) {
-      for (let lvl = 1; lvl <= 4; lvl++) {
-        masterPool[lvl] = rawMasterData[lvl].map((pair, idx) => buildFullCard(pair[0], pair[1], pair[2], lvl, idx));
-      }
-    }
-
-    function replenishPool(lvl) {
-      if (!learningPool[lvl]) learningPool[lvl] = [];
-      if (!masterPool[lvl]) masterPool[lvl] = [];
-
-      while (learningPool[lvl].length < 10 && masterPool[lvl].length > 0) {
-        const nextCard = masterPool[lvl].shift();
-        learningPool[lvl].push(nextCard);
-      }
-      saveState();
-    }
-
-    function saveState() {
-      localStorage.setItem('flashcard_master_v6', JSON.stringify(masterPool));
-      localStorage.setItem('flashcard_learning_v6', JSON.stringify(learningPool));
-      localStorage.setItem('flashcard_revision_v6', JSON.stringify(revisionPool));
-    }
-
-    function getActiveDeck() {
-      return (currentMode === 'learning') ? learningPool[currentLevel] : revisionPool[currentLevel];
-    }
-
-    const card = document.getElementById('flashcard');
-
-    function renderCard() {
-      replenishPool(currentLevel);
-      const activeDeck = getActiveDeck();
-
-      document.getElementById('learn-count').textContent = learningPool[currentLevel].length;
-      document.getElementById('rev-count').textContent = revisionPool[currentLevel].length;
-
-      card.classList.remove('is-flipped', 'slide-left', 'slide-up', 'slide-down');
-
-      if (!activeDeck || activeDeck.length === 0) {
-        document.getElementById('front-w1').textContent = (currentMode === 'learning') ? "Mastered All!" : "No Cards";
-        document.getElementById('front-w2').textContent = (currentMode === 'learning') ? "🎉" : "Empty";
-
-        document.getElementById('back-diff').textContent = "No cards available in this section.";
-        document.getElementById('back-w1-name').textContent = "Empty";
-        document.getElementById('back-w2-name').textContent = "Empty";
-        return;
-      }
-
-      if (currentIndex >= activeDeck.length) currentIndex = 0;
-      const item = activeDeck[currentIndex];
-
-      document.getElementById('front-w1').textContent = item.w1.name;
-      document.getElementById('front-w2').textContent = item.w2.name;
-
-      document.getElementById('back-diff').textContent = item.diff;
-      document.getElementById('back-w1-name').textContent = item.w1.name;
-      document.getElementById('back-w1-syn').textContent = "Syn: " + item.w1.syn;
-      document.getElementById('back-w1-ant').textContent = "Ant: " + item.w1.ant;
-      document.getElementById('back-w1-mean').textContent = item.w1.mean;
-      document.getElementById('back-w1-sent').textContent = item.w1.sent;
-
-      document.getElementById('back-w2-name').textContent = item.w2.name;
-      document.getElementById('back-w2-syn').textContent = "Syn: " + item.w2.syn;
-      document.getElementById('back-w2-ant').textContent = "Ant: " + item.w2.ant;
-      document.getElementById('back-w2-mean').textContent = item.w2.mean;
-      document.getElementById('back-w2-sent').textContent = item.w2.sent;
-    }
-
-    function selectLevel(lvl) {
-      currentLevel = lvl;
-      for (let i = 1; i <= 4; i++) {
-        document.getElementById(`lvl-${i}`).classList.toggle('active', i === lvl);
-      }
-      currentIndex = 0;
-      renderCard();
-    }
-
-    function switchMode(mode) {
-      currentMode = mode;
-      document.getElementById('tab-learning').classList.toggle('active', mode === 'learning');
-      document.getElementById('tab-revision').classList.toggle('active', mode === 'revision');
-      currentIndex = 0;
-      renderCard();
-    }
-
-    let startX = 0, startY = 0;
-
-    function handleStart(e) {
-      const touch = e.touches ? e.touches[0] : e;
-      startX = touch.clientX;
-      startY = touch.clientY;
-    }
-
-    function handleEnd(e) {
-      const touch = e.changedTouches ? e.changedTouches[0] : e;
-      const diffX = touch.clientX - startX;
-      const diffY = touch.clientY - startY;
-      const minSwipe = 40;
-      const activeDeck = getActiveDeck();
-
-      if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > minSwipe) {
-          card.classList.toggle('is-flipped');
-        } else if (diffX < -minSwipe) {
-          if (activeDeck && activeDeck.length > 0) {
-            card.classList.add('slide-left');
-            setTimeout(() => {
-              if (currentMode === 'learning') {
-                const moved = learningPool[currentLevel].splice(currentIndex, 1)[0];
-                revisionPool[currentLevel].push(moved);
-              } else {
-                const moved = revisionPool[currentLevel].splice(currentIndex, 1)[0];
-                masterPool[currentLevel].unshift(moved);
+              ${
+                currentMode === "learning"
+                ? "✓ LEARNED"
+                : "✓ MASTERED"
               }
-              replenishPool(currentLevel);
-              saveState();
-              renderCard();
-            }, 300);
+
+            </button>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    enableSwipe();
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     DETAILS
+  ======================================================= */
+
+  container.innerHTML = `
+
+    <div
+      class="card"
+      id="flashCard">
+
+
+      <div class="card-number">
+
+        ${currentIndex + 1}/${cards.length}
+
+      </div>
+
+
+      <div class="details-side">
+
+
+        <div class="details-title">
+
+          English Vocabulary
+
+        </div>
+
+
+        <!-- KEY DIFFERENCE -->
+
+        <div class="difference-box">
+
+          <div class="difference-label">
+
+            KEY DIFFERENCE
+
+          </div>
+
+          <div class="difference-text">
+
+            ${escapeHtml(
+              card.diff
+            )}
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             WORD 1
+             Row 1 = Word + SYN
+             Row 2 = Meaning + ANT
+             Row 3 = Example
+        ================================================== -->
+
+        <div class="detail-word">
+
+
+          <!-- WORD + SYN -->
+
+          <div class="detail-header">
+
+            <div class="detail-word-name">
+
+              ${escapeHtml(
+                card.w1.name
+              )}
+
+            </div>
+
+
+            <div class="syn-line">
+
+              <span class="badge badge-syn">
+
+                SYN:
+                ${escapeHtml(
+                  card.w1.syn
+                )}
+
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- MEANING + ANT -->
+
+          <div class="meaning-row">
+
+            <div class="info-text">
+
+              ${escapeHtml(
+                card.w1.mean
+              )}
+
+            </div>
+
+
+            <span class="badge badge-ant">
+
+              ANT:
+              ${escapeHtml(
+                card.w1.ant
+              )}
+
+            </span>
+
+          </div>
+
+
+          <!-- EXAMPLE -->
+
+          <div class="sentence-text">
+
+            ${escapeHtml(
+              card.w1.sent
+            )}
+
+          </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             WORD 2
+        ================================================== -->
+
+        <div class="detail-word second">
+
+
+          <!-- WORD + SYN -->
+
+          <div class="detail-header">
+
+            <div class="detail-word-name">
+
+              ${escapeHtml(
+                card.w2.name
+              )}
+
+            </div>
+
+
+            <div class="syn-line">
+
+              <span class="badge badge-syn">
+
+                SYN:
+                ${escapeHtml(
+                  card.w2.syn
+                )}
+
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- MEANING + ANT -->
+
+          <div class="meaning-row">
+
+            <div class="info-text">
+
+              ${escapeHtml(
+                card.w2.mean
+              )}
+
+            </div>
+
+
+            <span class="badge badge-ant">
+
+              ANT:
+              ${escapeHtml(
+                card.w2.ant
+              )}
+
+            </span>
+
+          </div>
+
+
+          <!-- EXAMPLE -->
+
+          <div class="sentence-text">
+
+            ${escapeHtml(
+              card.w2.sent
+            )}
+
+          </div>
+
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="details-actions">
+
+          ${
+            currentMode === "learning"
+
+            ?
+
+            `
+
+            <button
+              class="btn-learning"
+              onclick="moveToRevision()">
+
+              ✓ LEARNED
+
+            </button>
+
+            `
+
+            :
+
+            `
+
+            <button
+              class="btn-learning"
+              onclick="moveToLearning()">
+
+              ↩ LEARNING
+
+            </button>
+
+
+            <button
+              class="btn-mastered"
+              onclick="moveToLearned2()">
+
+              ✓ MASTERED
+
+            </button>
+
+            `
           }
-        }
-      } else {
-        if (diffY < -minSwipe) {
-          if (activeDeck && activeDeck.length > 0) {
-            card.classList.add('slide-up');
-            setTimeout(() => {
-              currentIndex = (currentIndex + 1) % activeDeck.length;
-              renderCard();
-            }, 300);
-          }
-        } else if (diffY > minSwipe) {
-          if (activeDeck && activeDeck.length > 0) {
-            card.classList.add('slide-down');
-            setTimeout(() => {
-              currentIndex = (currentIndex - 1 + activeDeck.length) % activeDeck.length;
-              renderCard();
-            }, 300);
-          }
-        }
-      }
-    }
 
-    card.addEventListener('touchstart', handleStart);
-    card.addEventListener('touchend', handleEnd);
-    card.addEventListener('mousedown', handleStart);
-    card.addEventListener('mouseup', handleEnd);
+        </div>
 
-    function openModal() {
-      document.getElementById('add-modal').style.display = 'flex';
-    }
 
-    function closeModal() {
-      document.getElementById('add-modal').style.display = 'none';
-    }
+      </div>
 
-    function saveCustomCard() {
-      const lvl = parseInt(document.getElementById('modal-level').value);
-      const w1 = document.getElementById('modal-w1').value.trim();
-      const w2 = document.getElementById('modal-w2').value.trim();
-      const diff = document.getElementById('modal-diff').value.trim();
 
-      if (!w1 || !w2 || !diff) {
-        alert("Please fill in all fields!");
+    </div>
+
+  `;
+
+
+  enableSwipe();
+
+}
+
+
+/* =========================================================
+   MOVE CURRENT FROM FRONT
+========================================================= */
+
+function moveCurrentFromFront() {
+
+  if (
+    currentMode ===
+    "learning"
+  ) {
+
+    moveToRevision();
+
+  }
+
+  else {
+
+    moveToLearned2();
+
+  }
+
+}
+
+/* =========================================================
+   SWIPE
+========================================================= */
+
+function enableSwipe() {
+
+  const card =
+    document.getElementById(
+      "flashCard"
+    );
+
+  if (!card) {
+    return;
+  }
+
+  let startX = 0;
+  let startY = 0;
+
+  card.addEventListener(
+    "touchstart",
+    function(event) {
+
+      if (
+        event.touches.length !== 1
+      ) {
         return;
       }
 
-      const newCard = buildFullCard(w1, w2, diff, lvl, Date.now());
-      masterPool[lvl].push(newCard);
-      replenishPool(lvl);
-      saveState();
+      startX =
+        event.touches[0].clientX;
 
-      document.getElementById('modal-w1').value = '';
-      document.getElementById('modal-w2').value = '';
-      document.getElementById('modal-diff').value = '';
-      closeModal();
-      selectLevel(lvl);
-      alert("Card added successfully to Level " + lvl + "!");
+      startY =
+        event.touches[0].clientY;
+
+    },
+    {
+      passive: true
     }
+  );
 
-    function toggleTheme(e) {
-      if (e) e.stopPropagation();
-      const body = document.body;
-      if (body.classList.contains('theme-sunset')) {
-        body.classList.remove('theme-sunset');
-        body.classList.add('theme-pastel');
-      } else {
-        body.classList.remove('theme-pastel');
-        body.classList.add('theme-sunset');
+
+  card.addEventListener(
+    "touchend",
+    function(event) {
+
+      if (
+        event.changedTouches.length !== 1
+      ) {
+        return;
       }
+
+      const endX =
+        event.changedTouches[0].clientX;
+
+      const endY =
+        event.changedTouches[0].clientY;
+
+      const dx =
+        endX - startX;
+
+      const dy =
+        endY - startY;
+
+      const absX =
+        Math.abs(dx);
+
+      const absY =
+        Math.abs(dy);
+
+      const threshold = 55;
+
+
+      /* =====================================================
+         HORIZONTAL SWIPE
+      ===================================================== */
+
+      if (
+        absX > absY &&
+        absX >= threshold
+      ) {
+
+        /*
+         * RIGHT = DETAILS
+         */
+
+        if (
+          dx > 0 &&
+          !showingDetails
+        ) {
+
+          showingDetails = true;
+
+          renderCard();
+
+          return;
+
+        }
+
+
+        /*
+         * LEFT = MOVE CARD
+         */
+
+        if (
+          dx < 0
+        ) {
+
+          moveCurrentCard();
+
+          return;
+
+        }
+
+      }
+
+
+      /* =====================================================
+         VERTICAL SWIPE
+      ===================================================== */
+
+      if (
+        absY > absX &&
+        absY >= threshold
+      ) {
+
+        /*
+         * UP = NEXT
+         */
+
+        if (
+          dy < 0
+        ) {
+
+          nextCard();
+
+          return;
+
+        }
+
+
+        /*
+         * DOWN = PREVIOUS
+         */
+
+        if (
+          dy > 0
+        ) {
+
+          previousCard();
+
+          return;
+
+        }
+
+      }
+
+    },
+    {
+      passive: true
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MOVE CURRENT CARD
+========================================================= */
+
+function moveCurrentCard() {
+
+  if (
+    !cards ||
+    cards.length === 0
+  ) {
+    return;
+  }
+
+  const card =
+    cards[currentIndex];
+
+  if (!card) {
+    return;
+  }
+
+
+  /*
+   * LEARNING MODE
+   *
+   * Vocabulary → Learned
+   */
+
+  if (
+    currentMode === "learning"
+  ) {
+
+    moveToRevision();
+
+    return;
+
+  }
+
+
+  /*
+   * REVISION MODE
+   *
+   * Default left action:
+   * Revision → Learned 2
+   */
+
+  if (
+    currentMode === "revision"
+  ) {
+
+    moveToLearned2();
+
+    return;
+
+  }
+
+}
+
+
+
+
+
+
+/* =========================================================
+   NEXT CARD — CONTINUOUS LOOP
+========================================================= */
+
+function nextCard() {
+
+  if (
+    !cards ||
+    cards.length === 0
+  ) {
+    return;
+  }
+
+  currentIndex =
+    (currentIndex + 1) %
+    cards.length;
+
+  showingDetails = false;
+
+  renderCard();
+}
+
+
+/* =========================================================
+   PREVIOUS CARD — CONTINUOUS LOOP
+========================================================= */
+
+function previousCard() {
+
+  if (
+    !cards ||
+    cards.length === 0
+  ) {
+    return;
+  }
+
+  currentIndex =
+    (currentIndex - 1 + cards.length) %
+    cards.length;
+
+  showingDetails = false;
+
+  renderCard();
+}
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    const tag =
+      document.activeElement.tagName;
+
+
+    if (
+      tag === "INPUT" ||
+      tag === "TEXTAREA" ||
+      tag === "SELECT"
+    ) {
+      return;
     }
 
-    selectLevel(1);
-  </script>
+
+    /* =====================================================
+       RIGHT ARROW = SHOW DETAILS
+    ===================================================== */
+
+    if (
+      event.key === "ArrowRight"
+    ) {
+
+      event.preventDefault();
+
+
+      if (
+        !showingDetails
+      ) {
+
+        showingDetails = true;
+
+        renderCard();
+
+      }
+      else {
+
+        nextCard();
+
+      }
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       LEFT ARROW = MOVE CARD
+    ===================================================== */
+
+    if (
+      event.key === "ArrowLeft"
+    ) {
+
+      event.preventDefault();
+
+      moveCurrentCard();
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       UP ARROW = NEXT
+    ===================================================== */
+
+    if (
+      event.key === "ArrowUp"
+    ) {
+
+      event.preventDefault();
+
+      nextCard();
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       DOWN ARROW = PREVIOUS
+    ===================================================== */
+
+    if (
+      event.key === "ArrowDown"
+    ) {
+
+      event.preventDefault();
+
+      previousCard();
+
+      return;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   MOVE TO REVISION
+========================================================= */
+
+async function moveToRevision() {
+
+  const card =
+    cards[currentIndex];
+
+
+  if (!card) {
+    return;
+  }
+
+
+  await moveCard(
+    card.id,
+    "revision"
+  );
+
+}
+
+
+/* =========================================================
+   MOVE TO LEARNING
+========================================================= */
+
+async function moveToLearning() {
+
+  const card =
+    cards[currentIndex];
+
+
+  if (!card) {
+    return;
+  }
+
+
+  await moveCard(
+    card.id,
+    "learning"
+  );
+
+}
+
+
+/* =========================================================
+   MOVE TO LEARNED 2
+========================================================= */
+
+async function moveToLearned2() {
+
+  const card =
+    cards[currentIndex];
+
+
+  if (!card) {
+    return;
+  }
+
+
+  await moveCard(
+    card.id,
+    "learned2"
+  );
+
+}
+
+
+/* =========================================================
+   MOVE CARD
+========================================================= */
+
+async function moveCard(
+  id,
+  destination
+) {
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  status.textContent =
+    "Moving card...";
+
+
+  try {
+
+    const url =
+      API_URL +
+      "?action=move" +
+      "&id=" +
+      encodeURIComponent(
+        id
+      ) +
+      "&destination=" +
+      encodeURIComponent(
+        destination
+      );
+
+
+    const response =
+      await fetch(
+        url,
+        {
+          method:
+            "GET",
+
+          cache:
+            "no-store"
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP error: " +
+        response.status
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !data.success
+    ) {
+
+      throw new Error(
+        data.error ||
+        "Card could not be moved."
+      );
+
+    }
+
+
+    /*
+     * Remove current card
+     */
+
+    cards.splice(
+      currentIndex,
+      1
+    );
+
+
+    /*
+     * Correct index
+     */
+
+    if (
+      currentIndex >=
+      cards.length
+    ) {
+
+      currentIndex =
+        cards.length - 1;
+
+    }
+
+
+    if (
+      currentIndex < 0
+    ) {
+
+      currentIndex =
+        0;
+
+    }
+
+
+    showingDetails =
+      false;
+
+
+    status.textContent =
+      "Card moved successfully.";
+
+
+    renderCard();
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    status.textContent =
+      "Error: " +
+      error.message;
+
+  }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+  value
+) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
+    return "";
+  }
+
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+</script>
 
 </body>
 </html>
